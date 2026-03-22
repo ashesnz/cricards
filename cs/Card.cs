@@ -2,7 +2,7 @@ using Godot;
 using System;
 
 [Tool]
-public partial class Card : Node2D
+public partial class Card : Control
 {
 	[Signal] public delegate void MouseEnteredEventHandler(Card card);
 	[Signal] public delegate void MouseExitedEventHandler(Card card);
@@ -24,31 +24,32 @@ public partial class Card : Node2D
 	private Vector2 _original_scale;
 	private Vector2 _original_position;
 
-	private Sprite2D? card_border_sprite;
-	private Sprite2D? image_sprite;
+	private TextureRect? card_border_sprite;
+	private TextureRect? image_sprite;
 	private Label? cost_label;
 	private Label? title_label;
 	private Label? description_label;
 	private Label? type_label;
 	private Area2D? area_2d;
-	private Sprite2D? card_sprite;
+	private TextureRect? card_sprite;
 
 	public override void _Ready()
 	{
-		card_border_sprite = GetNodeOrNull<Sprite2D>("CardBorderSprite");
-		image_sprite = GetNodeOrNull<Sprite2D>("ImageSprite");
+		card_border_sprite = GetNodeOrNull<TextureRect>("CardBorderSprite");
+		image_sprite = GetNodeOrNull<TextureRect>("ImageSprite");
 		cost_label = GetNodeOrNull<Label>("CostLabel");
 		title_label = GetNodeOrNull<Label>("TitleLabel");
 		description_label = GetNodeOrNull<Label>("descriptionLabel");
 		type_label = GetNodeOrNull<Label>("TypeLabel");
-		area_2d = GetNodeOrNull<Area2D>("Area2D");
-		card_sprite = GetNodeOrNull<Sprite2D>("CardSprite");
+		card_sprite = GetNodeOrNull<TextureRect>("CardSprite");
 
-		if (area_2d != null)
-		{
-			area_2d.MouseEntered += _on_area_2d_mouse_entered;
-			area_2d.MouseExited += _on_area_2d_mouse_exited;
-		}
+		// Set rect_min_size based on the card sprite texture and scale so parent layouts
+		// can size slots sensibly.
+		UpdateRectMinSizeFromSprite();
+
+		// Use Control's mouse_entered/mouse_exited signals for hover detection
+		this.MouseEntered += _on_area_2d_mouse_entered;
+		this.MouseExited += _on_area_2d_mouse_exited;
 	}
 
 	public override void _Process(double delta)
@@ -77,10 +78,10 @@ public partial class Card : Node2D
 		if (!is_highlighted)
 		{
 			is_highlighted = true;
-			var tween = CreateTween();
-			tween.SetParallel();
-			tween.TweenProperty(this, "scale", _original_scale * 1.25f, 0.2f);
-			tween.TweenProperty(this, "position:y", _original_position.Y - 135, 0.2f);
+						var tween = CreateTween();
+						tween.SetParallel();
+			tween.TweenProperty(this, "rect_scale", _original_scale * 1.25f, 0.2f);
+			tween.TweenProperty(this, "rect_position:y", _original_position.Y - 135, 0.2f);
 		}
 	}
 
@@ -91,8 +92,8 @@ public partial class Card : Node2D
 			is_highlighted = false;
 			tween_unhighlight = CreateTween();
 			tween_unhighlight.SetParallel();
-			tween_unhighlight.TweenProperty(this, "scale", _original_scale * 1.0f, 0.5f);
-			tween_unhighlight.TweenProperty(this, "position:y", _original_position.Y, 0.5f);
+			tween_unhighlight.TweenProperty(this, "rect_scale", _original_scale * 1.0f, 0.5f);
+			tween_unhighlight.TweenProperty(this, "rect_position:y", _original_position.Y, 0.5f);
 		}
 	}
 
@@ -177,7 +178,10 @@ public partial class Card : Node2D
 		_SetColour(type);
 
 		if (image != null && image_sprite != null)
+		{
 			image_sprite.Texture = image;
+			UpdateRectMinSizeFromSprite();
+		}
 	}
 
 	private void _on_area_2d_mouse_entered()
@@ -188,6 +192,18 @@ public partial class Card : Node2D
 	private void _on_area_2d_mouse_exited()
 	{
 		EmitSignal(SignalName.MouseExited, this);
+	}
+
+	private void UpdateRectMinSizeFromSprite()
+	{
+		if (card_sprite != null && card_sprite.Texture != null)
+		{
+			Vector2 texSize = card_sprite.Texture.GetSize();
+			Vector2 scale = card_sprite.RectScale != Vector2.Zero ? card_sprite.RectScale : this.RectScale;
+			this.RectMinSize = texSize * scale;
+			_original_scale = this.RectScale;
+			_original_position = this.RectPosition;
+		}
 	}
 }
 

@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://cbkph8q1bp178"]
+
+[ext_resource type="Script" path="res://scripts/cards/playable_card.gd" id="1_83k51"]
+[ext_resource type="PackedScene" uid="uid://c4sdhdmmxwye6" path="res://scenes/cards/Card.tscn" id="2_gotcn"]
+
+[node name="PlayableCard" type="Node2D"]
+script = ExtResource("1_83k51")
+
+[node name="Card" parent="." instance=ExtResource("2_gotcn")]
+unique_name_in_owner = true

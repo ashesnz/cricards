@@ -10,32 +10,24 @@
 radius = 9.30719
 height = 27.3987
 
-[node name="Card" type="Node2D"]
-scale = Vector2(0.375, 0.375)
+[node name="Card" type="Control"]
+rect_scale = Vector2(0.375, 0.375)
 script = ExtResource("1_umjp1")
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="CardBorderSprite" type="TextureRect" parent="."]
 unique_name_in_owner = true
-position = Vector2(-2.66667, 18.6667)
-scale = Vector2(5, 5)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(0.533333, -4.8)
-scale = Vector2(5.1, 5.1)
-shape = SubResource("CapsuleShape2D_4wvrc")
-
-[node name="CardBorderSprite" type="Sprite2D" parent="."]
-unique_name_in_owner = true
+stretch_mode = 0
 modulate = Color(1, 0.419608, 0.419608, 1)
 texture = ExtResource("2_fh1hc")
 
-[node name="ImageSprite" type="Sprite2D" parent="."]
+[node name="ImageSprite" type="TextureRect" parent="."]
 unique_name_in_owner = true
-position = Vector2(4, -129.334)
-scale = Vector2(0.993631, 1.02342)
+rect_position = Vector2(4, -129.334)
+rect_scale = Vector2(0.993631, 1.02342)
 
-[node name="CardSprite" type="Sprite2D" parent="."]
+[node name="CardSprite" type="TextureRect" parent="."]
 unique_name_in_owner = true
+stretch_mode = 0
 texture = ExtResource("3_7kxam")
 
 [node name="TitleLabel" type="Label" parent="."]
@@ -49,12 +41,13 @@ text = "TODO: Card Title"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="CostDisplay" type="Node2D" parent="."]
-position = Vector2(-224.334, -284.667)
+[node name="CostDisplay" type="Control" parent="."]
+rect_position = Vector2(-224.334, -284.667)
 metadata/_edit_group_ = true
 
-[node name="CostSprite" type="Sprite2D" parent="CostDisplay"]
-scale = Vector2(0.702729, 0.816543)
+[node name="CostSprite" type="TextureRect" parent="CostDisplay"]
+rect_scale = Vector2(0.702729, 0.816543)
+stretch_mode = 0
 texture = ExtResource("4_yfsjg")
 
 [node name="CostLabel" type="Label" parent="CostDisplay"]

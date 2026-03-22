@@ -1,0 +1,7 @@
+# Godot 4+ specific ignores
+.godot/
+/android/
+html export
+
+# Ignore .tmp files
+*.tmp

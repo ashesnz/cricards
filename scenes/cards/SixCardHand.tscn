@@ -1,0 +1,13 @@
+++ Begin File
+[gd_scene load_steps=2 format=3 uid="uid://sixcardhand"]
+
+[ext_resource type="Script" path="res://cs/Hand.cs" id="1_hand"]
+
+[node name="SixCardHand" type="Control"]
+script = ExtResource("1_hand")
+
+[node name="CardRow" type="HBoxContainer" parent="."]
+alignment = 1
+separation = 20
+
+++ End File

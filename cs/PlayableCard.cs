@@ -2,7 +2,7 @@ using Godot;
 using System.Collections.Generic;
 using Godot.Collections;
 
-public partial class PlayableCard : Node2D
+public partial class PlayableCard : Control
 {
     [Signal] public delegate void MouseEnteredEventHandler(PlayableCard card);
     [Signal] public delegate void MouseExitedEventHandler(PlayableCard card);

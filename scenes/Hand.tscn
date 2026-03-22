@@ -4,15 +4,20 @@
 [ext_resource type="PackedScene" uid="uid://cbkph8q1bp178" path="res://scenes/cards/PlayableCard.tscn" id="2_fa5au"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_upk61"]
-radius = 50.0
+radius = 100.0
 
-[node name="Hand" type="Node2D"]
+[node name="Hand" type="Control"]
 script = ExtResource("1_xhqqk")
 arc_width = 420.0
 arc_height = 80.0
 hover_lift = 80.0
 max_rotation_deg = 12.0
 playable_card_scene = ExtResource("2_fa5au")
+hand_radius = 100.0
+card_angle = -90.0
+angle_limit = 20.0
+max_card_spread_angle = 5.0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_upk61")
+[node name="CardRow" type="HBoxContainer" parent="."]
+alignment = 1
+separation = 20
