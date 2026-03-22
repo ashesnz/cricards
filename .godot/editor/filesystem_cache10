@@ -1,0 +1,199 @@
+63f7b34db8d8cdea90c76aacccf841ec
+::res://::1774166513
+export_presets.cfg::TextFile::-1::1774146705::0::1::::<><><>0<>0<><>::
+README.md::TextFile::-1::1774141836::0::1::::<><><>0<>0<><>::
+::res://assets/::1774154912
+ComicNeue-Bold.ttf::FontFile::4050929016727094022::1774154886::1774154912::1::::<><><>0<>0<>3a67dc5fe2c01f00f3c8a7afb9d9a4b0<>res://.godot/imported/ComicNeue-Bold.ttf-f2c5ab1afd440d2acbe99159443b2b96.fontdata::
+::res://assets/audio/::1774154794
+default_bus_layout.tres::Resource::-1::1774154794::0::1::::<><><>0<>0<><>::
+::res://assets/audio/music/::1774154863
+CardGame_Soundtrack.mp3::AudioStreamMP3::5177481864663138360::1774154794::1774154863::1::::<><><>0<>0<>94d6264bc2bd9342e1bf8b29d8d9deb3<>res://.godot/imported/CardGame_Soundtrack.mp3-41c2dfdb9b8e476223ccf02a3ec64f78.mp3str::
+CardGame_Soundtrack_2.mp3::AudioStreamMP3::2860359409471564757::1774154794::1774154863::1::::<><><>0<>0<>1cbc5e8756e0c09e3d20f3a852855d93<>res://.godot/imported/CardGame_Soundtrack_2.mp3-9b44cd0f1c79bdcaca7b9a250cc9e291.mp3str::
+::res://assets/audio/sfx/::1774154863
+GGA_Amnesia.wav::AudioStreamWAV::1388969779802425574::1774154793::1774154863::1::::<><><>0<>0<>10cf61649b37fd5536d12da31f101531<>res://.godot/imported/GGA_Amnesia.wav-844c9dc68aa700b319fe6385486f005f.sample::
+GGA_Button.wav::AudioStreamWAV::1542873218071137571::1774154793::1774154863::1::::<><><>0<>0<>ae6958c8f3b120c5c1769e9f71b77111<>res://.godot/imported/GGA_Button.wav-9d8650bad16c91cb74ff1d0ee92a8807.sample::
+GGA_CardBurn.wav::AudioStreamWAV::7217569947758196723::1774154793::1774154863::1::::<><><>0<>0<>463853f1a52ce2993f04aede615dfd23<>res://.godot/imported/GGA_CardBurn.wav-8306d292d69311fdee1747cf3ebaa413.sample::
+GGA_CardFlip_1.wav::AudioStreamWAV::1586859237836792770::1774154794::1774154863::1::::<><><>0<>0<>1a7bb69130f7e79b4873dc89a014dba9<>res://.godot/imported/GGA_CardFlip_1.wav-bdf030b3782d2487dfeb249d9af94b56.sample::
+GGA_CardFlip_2.wav::AudioStreamWAV::5500817720208347879::1774154794::1774154863::1::::<><><>0<>0<>397c9c6127d8272ab618e7cb82cd8e7c<>res://.godot/imported/GGA_CardFlip_2.wav-90914cc7f4264456530a7f3345f64e0f.sample::
+GGA_CardFlip_3.wav::AudioStreamWAV::8455429430296917546::1774154794::1774154863::1::::<><><>0<>0<>9e39055f592464403a14c9f356de10d8<>res://.godot/imported/GGA_CardFlip_3.wav-c341cc9ea327eb865853b8c961453530.sample::
+GGA_Cocaine.wav::AudioStreamWAV::8086806034813871174::1774154793::1774154863::1::::<><><>0<>0<>1b6d0eb3d20a71e80672bfdd5cec7d24<>res://.godot/imported/GGA_Cocaine.wav-85dbe5119bb04e08685d23248ffe9962.sample::
+GGA_DeckDeal.wav::AudioStreamWAV::2864192267423527265::1774154794::1774154863::1::::<><><>0<>0<>0bc0721ed07eeb86da5992c1e9b6bc44<>res://.godot/imported/GGA_DeckDeal.wav-04872a5605ee8a97ec3fd53a5bca3a16.sample::
+GGA_DiscardDeck_Open.wav::AudioStreamWAV::3680151598253444947::1774154794::1774154863::1::::<><><>0<>0<>e7ff83d5dc3688dd5d13872e2e0866c6<>res://.godot/imported/GGA_DiscardDeck_Open.wav-23ef4a4f52cab47a349d2373d29b7cda.sample::
+GGA_DrawDeck_Close.wav::AudioStreamWAV::2003820131802392834::1774154794::1774154863::1::::<><><>0<>0<>d23c9fa2ab184a67861e94c275e05fa7<>res://.godot/imported/GGA_DrawDeck_Close.wav-dc695898bcd0dc9714f385360dac0713.sample::
+GGA_DrawDeck_Open.wav::AudioStreamWAV::3340743287559803416::1774154794::1774154863::1::::<><><>0<>0<>1c4e1379532d975f3fa9720fcfc99bae<>res://.godot/imported/GGA_DrawDeck_Open.wav-2a6faf55a2c6be004517501441bc7ba1.sample::
+GGA_LanternBash.wav::AudioStreamWAV::8410178226693958041::1774154794::1774154863::1::::<><><>0<>0<>353e148ad8a31a857b87be9abcee35ea<>res://.godot/imported/GGA_LanternBash.wav-28985b8ea5ab367cd8cd357e82fdd024.sample::
+GGA_ManaGlass.wav::AudioStreamWAV::3328645255663204877::1774154794::1774154863::1::::<><><>0<>0<>e868bdcb9334a9131dbd7aae8a57a6fb<>res://.godot/imported/GGA_ManaGlass.wav-e12fd381728bc6325b19c23ade9f962a.sample::
+GGA_ManaGlass_Empty.mp3::AudioStreamMP3::8746415263101032617::1774154794::1774154863::1::::<><><>0<>0<>1c98526312b39b9828c47aabb713c50c<>res://.godot/imported/GGA_ManaGlass_Empty.mp3-04d4420628c96241b92b3f1d990a9339.mp3str::
+GGA_Map_Open.wav::AudioStreamWAV::6952167269316494061::1774154794::1774154863::1::::<><><>0<>0<>192792b1aee313fa27f7f3f079f00952<>res://.godot/imported/GGA_Map_Open.wav-7d1618b9cd2e8f64d2ccd5c86dadcd5e.sample::
+GGA_Map_Select.wav::AudioStreamWAV::8064202635183977314::1774154794::1774154863::1::::<><><>0<>0<>6f66bf38ca50e8d8142694a8cb5d71ed<>res://.godot/imported/GGA_Map_Select.wav-2f9de6368592ceb9d5e811582da2143b.sample::
+GGA_SecretBarFull.mp3::AudioStreamMP3::7568528202730573921::1774154794::1774154863::1::::<><><>0<>0<>71566bbc03b1e9c7e4e2fd768047e743<>res://.godot/imported/GGA_SecretBarFull.mp3-78e92ef659c91969de1f7b3f6f163c1f.mp3str::
+GGA_SecretCard.wav::AudioStreamWAV::9022481858159600297::1774154794::1774154863::1::::<><><>0<>0<>8e90494d24bacebf018503f9b6617e39<>res://.godot/imported/GGA_SecretCard.wav-59e24ca69850407be451fc6d511cd9d4.sample::
+GGA_ShieldSelf.wav::AudioStreamWAV::7301700313452689247::1774154794::1774154863::1::::<><><>0<>0<>84ee2d662c6a99759394878093066b1a<>res://.godot/imported/GGA_ShieldSelf.wav-8c1eb9e8ff306a4d308406d8be314250.sample::
+::res://assets/images/::1774154863
+icon.svg::CompressedTexture2D::6853957174774126616::1774154793::1774154863::1::::<><><>0<>0<>2dcba098be9e4f83ff6a810c32e0452b<>res://.godot/imported/icon.svg-2a379f463509f41fc5e90a1cd52fdb6b.ctex::
+::res://assets/images/backgrounds/::1774154863
+background.jpg::CompressedTexture2D::8213206032545464206::1774154793::1774154863::1::::<><><>0<>0<>92070f63d022fa3f08a59935701546f1<>res://.godot/imported/background.jpg-58ed5d2dc650d179b950eed41d3d2a6c.ctex::
+background_test.png::CompressedTexture2D::9000663329692890457::1774154793::1774154863::1::::<><><>0<>0<>75dc8827e0f536bd91d214441f067711<>res://.godot/imported/background_test.png-609e565164d6ccac76f1990a862b87e2.ctex::
+::res://assets/images/cards/::1774154793
+::res://assets/images/cards/card images/::1774154863
+ad hominem.png::CompressedTexture2D::7944048072406304348::1774154793::1774154863::1::::<><><>0<>0<>a371a75f34e8e231c48d0e11756a0c5f<>res://.godot/imported/ad hominem.png-16102cea16efe60e4a9c5e95bbf9201f.ctex::
+amnesia.png::CompressedTexture2D::4227645231813371762::1774154793::1774154863::1::::<><><>0<>0<>f9957769a619d194afb059b5761330f9<>res://.godot/imported/amnesia.png-fcfbd6a095ad25d1b2574dbbeab501f5.ctex::
+appeal to nature.png::CompressedTexture2D::665406766603794163::1774154793::1774154863::1::::<><><>0<>0<>2f47ed500ab49f1f7feb6508b389be2c<>res://.godot/imported/appeal to nature.png-0b5148cca6cef49740c17eaa5a9b9142.ctex::
+bandwagon.png::CompressedTexture2D::8665297413864549942::1774154793::1774154863::1::::<><><>0<>0<>0eff67abeedd4bc21e3583a70a60ed6c<>res://.godot/imported/bandwagon.png-dbe7c2c83ccbf8f7d52af472aae9cb16.ctex::
+better defense.png::CompressedTexture2D::4506473456179768901::1774154793::1774154863::1::::<><><>0<>0<>1ed33521e925fbb4ab2afa21165a2e07<>res://.godot/imported/better defense.png-d55cb97a5d41d39d10410e2a3d9fe2fb.ctex::
+cocaine.png::CompressedTexture2D::8493402556977058361::1774154793::1774154863::1::::<><><>0<>0<>ac1fb4cbf29eaa7453357c10777e8bc9<>res://.godot/imported/cocaine.png-b6b7f19d8bba2f860630b7bc0b3ea048.ctex::
+denial.png::CompressedTexture2D::7507565553772315747::1774154793::1774154863::1::::<><><>0<>0<>1df3c0841cbf7ae06b9c1bd4207433f7<>res://.godot/imported/denial.png-15c940cb1f6d6a8fbd5e485c852dc067.ctex::
+false lead.png::CompressedTexture2D::7632655608102814084::1774154793::1774154863::1::::<><><>0<>0<>138829a68488478fe3747afd90df1424<>res://.godot/imported/false lead.png-7fa18acd9199e9a921552e2ace79e5bd.ctex::
+gaslight.png::CompressedTexture2D::8687645947653537138::1774154793::1774154863::1::::<><><>0<>0<>988d5258c3cfeb6d358cee0e34413133<>res://.godot/imported/gaslight.png-2b4113c85a97c89445764dfbf1bed122.ctex::
+love bombing.png::CompressedTexture2D::1070212407431660156::1774154793::1774154863::1::::<><><>0<>0<>acd4bdc04d3af7c9efb3c3af495d154d<>res://.godot/imported/love bombing.png-e943ca77a53824f9e425cbf738bac6d5.ctex::
+overcompensate.png::CompressedTexture2D::8649025506179679320::1774154793::1774154863::1::::<><><>0<>0<>e2c8d3e4c31d2b0a8221d01edc985e45<>res://.godot/imported/overcompensate.png-2b24e6413604c662a31ea8804af034af.ctex::
+strawman.png::CompressedTexture2D::8240534722823093859::1774154793::1774154863::1::::<><><>0<>0<>cd463bf38aa6445e618b8a5257e77a66<>res://.godot/imported/strawman.png-72707be05564e4ddb98b62acf8b603af.ctex::
+::res://assets/images/cards/core card/::1774154863
+card.png::CompressedTexture2D::4634033516958673048::1774154793::1774154863::1::::<><><>0<>0<>8978861d54cd2374ce83c7bde8c84b53<>res://.godot/imported/card.png-607b4b129cc2565568c71af72b615b09.ctex::
+card_border.png::CompressedTexture2D::8688028586160303172::1774154793::1774154863::1::::<><><>0<>0<>4e21bdf215cb0c8bdc0d9d0343bfb7d5<>res://.godot/imported/card_border.png-bb9087eb53912fce8b5b23e8360c8849.ctex::
+card_cost.png::CompressedTexture2D::447754289597332132::1774154793::1774154863::1::::<><><>0<>0<>b158b1e1957fd1ed2323fb1342933a17<>res://.godot/imported/card_cost.png-411aa1d2b8ac30e2542770465e544092.ctex::
+::res://assets/images/characters/::1774154863
+donut_daisy.png::CompressedTexture2D::5684105588552347091::1774154793::1774154863::1::::<><><>0<>0<>f25325319a5bf9c442ee7fa221540edd<>res://.godot/imported/donut_daisy.png-7fc81e59ea8af0a500b9e3abfde428b2.ctex::
+ice_cream.png::CompressedTexture2D::2400341926123722447::1774154793::1774154863::1::::<><><>0<>0<>978b54c32c6efad60a9f017e80c8c63c<>res://.godot/imported/ice_cream.png-762b2731646c488c081f9ac3b7bdf7c4.ctex::
+laban_lars.png::CompressedTexture2D::5618857205882080917::1774154793::1774154863::1::::<><><>0<>0<>80ae739126209e79a1b54949407c2612<>res://.godot/imported/laban_lars.png-fff53e73b1dbabd83510e572cae1f9e1.ctex::
+muffin_max.png::CompressedTexture2D::2897142583842224895::1774154793::1774154863::1::::<><><>0<>0<>a8cd0fc80af169f578fe0c05051d3aab<>res://.godot/imported/muffin_max.png-d2c03332c8ad95582237923968f7c329.ctex::
+player.png::CompressedTexture2D::6056143724584009676::1774154793::1774154863::1::::<><><>0<>0<>2f6db8324790414769bd4ba608248e2d<>res://.godot/imported/player.png-d8b4b792b995ebca42fddfbbe8d316ad.ctex::
+::res://assets/images/characters/icons/::1774154863
+defense.png::CompressedTexture2D::2762072585440685876::1774154793::1774154863::1::::<><><>0<>0<>00d2b7be2da13ae37bd4e0f74c80585c<>res://.godot/imported/defense.png-355fde8b944ef107c02c4e22424dfc94.ctex::
+::res://assets/images/deck/::1774154863
+card_back_disabled.png::CompressedTexture2D::6286736522327665485::1774154793::1774154863::1::::<><><>0<>0<>d72f56020392ea31173d548fa68de7bc<>res://.godot/imported/card_back_disabled.png-a61ad059d25b53f5330e58f55a104b14.ctex::
+card_back_hover.png::CompressedTexture2D::6286884333060530636::1774154793::1774154863::1::::<><><>0<>0<>8f985707ee82854decf1ce1d137ecc81<>res://.godot/imported/card_back_hover.png-c82e8b92072cb8cf7920558bf275ab14.ctex::
+card_back_normal.png::CompressedTexture2D::4073189299622671432::1774154793::1774154863::1::::<><><>0<>0<>7e27f9d55415b5c54319aa4ad6c42fcb<>res://.godot/imported/card_back_normal.png-767b716a288bc429b8cfb907aa4e21fe.ctex::
+card_back_pressed.png::CompressedTexture2D::5682751892277777922::1774154793::1774154863::1::::<><><>0<>0<>fe2fb28d72770091bf9db8aa043fd64e<>res://.godot/imported/card_back_pressed.png-e79656883fd6837e462a67992a6feb2e.ctex::
+deck_disabled.png::CompressedTexture2D::2699279067726423170::1774154793::1774154863::1::::<><><>0<>0<>681b08d0278cf4e979a6cb91c66021ed<>res://.godot/imported/deck_disabled.png-8df138d2edbca3c7b99a9e73bc80dd9a.ctex::
+deck_hover.png::CompressedTexture2D::1366224038649242797::1774154793::1774154863::1::::<><><>0<>0<>6c6930bd115e78edc0e36f83f2359e85<>res://.godot/imported/deck_hover.png-0b7712ebe8ccb6a2832726d7c1f45b39.ctex::
+deck_normal.png::CompressedTexture2D::7038595574318822617::1774154793::1774154863::1::::<><><>0<>0<>853dc18268b80e84fbfc217af65939e4<>res://.godot/imported/deck_normal.png-ce58c51a8d1e99a4a9d9adf2d70fb17c.ctex::
+deck_pressed.png::CompressedTexture2D::2998948159989049616::1774154793::1774154863::1::::<><><>0<>0<>92a0d928519fc4523ac4e786c5b75c36<>res://.godot/imported/deck_pressed.png-b542c6838af2e9e9a8f707037d3dbb7e.ctex::
+::res://assets/images/map/::1774154863
+dotted_line.png::CompressedTexture2D::5665334168207477670::1774154793::1774154863::1::::<><><>0<>0<>4af8192359b2842916500cb911df05c9<>res://.godot/imported/dotted_line.png-6bd829785c97e5a8c4d1171aa5e07bd1.ctex::
+encounter_disabled.png::CompressedTexture2D::4108978199122216198::1774154793::1774154863::1::::<><><>0<>0<>7713a999980d6469b18e09e646e7ec61<>res://.godot/imported/encounter_disabled.png-32eb3c1e5d2a8d53957c209c28ef12f1.ctex::
+encounter_hover.png::CompressedTexture2D::1450812940617401479::1774154793::1774154863::1::::<><><>0<>0<>6b8a21aa73720cfb71de0d9110ee545c<>res://.godot/imported/encounter_hover.png-d1ac3db6f21cdcd626093a4ac536b622.ctex::
+encounter_normal.png::CompressedTexture2D::2194740662125924463::1774154793::1774154863::1::::<><><>0<>0<>8e3e1946c7e6cc95ba49ee36eb080add<>res://.godot/imported/encounter_normal.png-03757f61507db2d8ab712b794c754215.ctex::
+encounter_pressed.png::CompressedTexture2D::6811505290766570645::1774154793::1774154863::1::::<><><>0<>0<>172a027d9dcfa1dfd70ebb310b46c372<>res://.godot/imported/encounter_pressed.png-1b2490887ff4570229e24ef5d20fc853.ctex::
+map.png::CompressedTexture2D::7000269361209866920::1774154793::1774154863::1::::<><><>0<>0<>77bd76d05ce66dba7b5af262b0b87c05<>res://.godot/imported/map.png-b27cdd5a04080f0dfd929279e505b25b.ctex::
+::res://assets/images/ui/::1774154863
+deck_hover.png::CompressedTexture2D::3848196503991533196::1774154793::1774154863::1::::<><><>0<>0<>6dd85f038a5ea79ba0ef4a3dd89b6f90<>res://.godot/imported/deck_hover.png-0b06a5b810f59c634000878797a41400.ctex::
+deck_normal.png::CompressedTexture2D::3722633694585154256::1774154793::1774154863::1::::<><><>0<>0<>431c4efe7ef04924294cba0170e388a9<>res://.godot/imported/deck_normal.png-c5dfc268583ee53750bdef32765868f1.ctex::
+deck_pressed.png::CompressedTexture2D::1448042168018384211::1774154793::1774154863::1::::<><><>0<>0<>ab27e00d2fecf5b378934ad8998d076e<>res://.godot/imported/deck_pressed.png-d5b813f6fcc54db51ab7c9bdd91c1139.ctex::
+discard_pile_hover.png::CompressedTexture2D::5882026906376121975::1774154793::1774154863::1::::<><><>0<>0<>337f3cd2e9989e070ddc834ef4ebcce8<>res://.godot/imported/discard_pile_hover.png-fd57f102deb40293410254e7fa453900.ctex::
+discard_pile_normal.png::CompressedTexture2D::2626438750588891561::1774154793::1774154863::1::::<><><>0<>0<>07e21052f923b7817dec296c3e42f06b<>res://.godot/imported/discard_pile_normal.png-4b9b870e5f815d397c6b8e7299a54531.ctex::
+discard_pile_pressed.png::CompressedTexture2D::3764531679443187918::1774154793::1774154863::1::::<><><>0<>0<>48f0d0671723bc1415fabee35d970a98<>res://.godot/imported/discard_pile_pressed.png-c7ccbc4cd7af6463e9446a60ac8b956d.ctex::
+draw_pile_hover.png::CompressedTexture2D::4625474261676928213::1774154793::1774154863::1::::<><><>0<>0<>a51d05ed1feeb16c91baea8a656b236c<>res://.godot/imported/draw_pile_hover.png-f4188b9df4a80eb0ac20fc2f2abedaf3.ctex::
+draw_pile_normal.png::CompressedTexture2D::2497698255080577806::1774154793::1774154863::1::::<><><>0<>0<>c3ff7de37d76df3f2bfd0247bc366b66<>res://.godot/imported/draw_pile_normal.png-fcce22a5ba233bec80157ddfe97890b8.ctex::
+draw_pile_pressed.png::CompressedTexture2D::8963403544451838686::1774154793::1774154863::1::::<><><>0<>0<>fd7d2d6bfce8bd4b15380e744ac4d7d1<>res://.godot/imported/draw_pile_pressed.png-37b4b474abe19dbdf9ca0e693d6fda81.ctex::
+mana_orb.png::CompressedTexture2D::195565046752030640::1774154793::1774154863::1::::<><><>0<>0<>fd0c69b9762994dd8a9ed3af8a32c905<>res://.godot/imported/mana_orb.png-2c868d079b1aaa1741d486511e67db3b.ctex::
+map_hover.png::CompressedTexture2D::5270144326644531432::1774154793::1774154863::1::::<><><>0<>0<>73cb567157b8f450d63d6a9af28dd454<>res://.godot/imported/map_hover.png-6a505b35d047f9a3bb18b759d3121366.ctex::
+map_normal.png::CompressedTexture2D::3068243111033717930::1774154793::1774154863::1::::<><><>0<>0<>684d51799276e281286368f66756ed6b<>res://.godot/imported/map_normal.png-97a81ea93f8903e800ff9e789d2f65e4.ctex::
+map_pressed.png::CompressedTexture2D::8085833138462605899::1774154793::1774154863::1::::<><><>0<>0<>01c3588cc481505f0a0ef80b11b36b5b<>res://.godot/imported/map_pressed.png-cd06a0448a754ef59da6303c1c5ecce2.ctex::
+mouse_cursor.png::CompressedTexture2D::5118407634477199650::1774154793::1774154863::1::::<><><>0<>0<>c358db582ddb7702d1376b49472e6e32<>res://.godot/imported/mouse_cursor.png-ce857689e4cc4949d9127cc0122b6686.ctex::
+number_circle.png::CompressedTexture2D::7789181507791487576::1774154793::1774154863::1::::<><><>0<>0<>528bdc81f4668cc6dad3008bd2bd4ad6<>res://.godot/imported/number_circle.png-9173f459ca183e04692bd5eb2cd68740.ctex::
+panel.png::CompressedTexture2D::3412426213436796981::1774154793::1774154863::1::::<><><>0<>0<>53f8fd5b08b11d08df2842c2064fc6fa<>res://.godot/imported/panel.png-bf09f26ef4623d3cf26aee8fa0cb1dce.ctex::
+::res://assets/resources/::1774154793
+main_theme.tres::Theme::-1::1774154793::0::1::::<><><>0<>0<><>::
+new_style_box_flat.tres::::-1::1774154793::0::1::::<><><>0<>0<><>::
+::res://bin/::1774141837
+::res://bin/Debug/::1774141837
+::res://bin/Debug/net7.0/::1774141837
+GameOff.deps.json::JSON::-1::1774141837::0::1::::<><><>0<>0<><>::
+::res://bin/Debug/net8.0/::1774141837
+GameOff.deps.json::JSON::-1::1774141837::0::1::::<><><>0<>0<><>::
+::res://card_data/::1774141836
+::res://card_data/attack/::1774147246
+ad_hominem.tres::Resource/CardData::3159959423366415607::1774141836::0::1::::<><><>0<>0<><>::res://cs/AttackAction.cs<>res://cs/DefenseAction5.cs<>res://cs/DefenseAction1.cs<>res://cs/CardData.cs<>uid://dlgfktv77efg3::::res://assets/images/cards/card images/ad hominem.png
+gaslight.tres::Resource/CardData::7627208217703696813::1774147246::0::1::::<><><>0<>0<><>::res://cs/AttackAction.cs<>res://cs/CardData.cs
+::res://card_data/defense/::1774141836
+appeal_to_nature_card.tres::Resource/CardData::1195901376234918292::1774141836::0::1::::<><><>0<>0<><>::res://cs/DefenseAction5.cs<>uid://jqlff8g37fxr::::res://assets/images/cards/card images/appeal to nature.png<>res://cs/CardData.cs
+denial.tres::Resource/CardData::7750119077988368167::1774141836::0::1::::<><><>0<>0<><>::res://cs/DrawACardAction.cs<>res://cs/DefenseAction1.cs<>uid://de7yrjavr483p::::res://assets/images/cards/card images/denial.png<>res://cs/CardData.cs
+overcompensate.tres::Resource/CardData::3709116782379449569::1774141836::0::1::::<><><>0<>0<><>::res://cs/DefenseAction1.cs<>res://cs/CardData.cs<>uid://dvhwglsfvks3y::::res://assets/images/cards/card images/overcompensate.png
+strawman.tres::Resource/CardData::6032094993741663403::1774141836::0::1::::<><><>0<>0<><>::res://cs/DefenseAction5.cs<>res://cs/ExhaustOtherRandomAction.cs<>res://cs/CardData.cs<>uid://dpn1nx1w2fjt8::::res://assets/images/cards/card images/strawman.png
+::res://card_data/secret/::1774141836
+false_lead.tres::Resource/CardData::6085921903871554134::1774141836::0::1::::<><><>0<>0<><>::res://cs/RevealSecretAction.cs<>res://cs/HealAction.cs<>uid://dg0kytp2o67po::::res://assets/images/cards/card images/false lead.png<>res://cs/CardData.cs
+::res://card_data/skill/::1774141836
+amnesia.tres::Resource/CardData::7593525777850703628::1774141836::0::1::::<><><>0<>0<><>::res://cs/DrawACardAction.cs<>uid://b1h5x1nlpus47::::res://assets/images/cards/card images/amnesia.png<>res://cs/CardData.cs
+bandwagon.tres::Resource/CardData::9097357153837543911::1774141836::0::1::::<><><>0<>0<><>::res://cs/DefenseAction1.cs<>res://cs/DrawACardAction.cs<>res://cs/CardData.cs<>uid://dvpsgg3xcdmsk::::res://assets/images/cards/card images/bandwagon.png
+cocaine.tres::Resource/CardData::5735010699905002611::1774141836::0::1::::<><><>0<>0<><>::res://cs/GetTwoMoreManaAction.cs<>uid://dtajdmxoi1nfl::::res://assets/images/cards/card images/cocaine.png<>res://cs/CardData.cs
+::res://card_data/tests/::1774141836
+exhaust_test_card.tres::Resource/CardData::451042677087639270::1774141836::0::1::::<><><>0<>0<><>::res://cs/ExhaustAction.cs<>res://cs/CardData.cs
+test.tres::Resource/CardData::6751412836674263530::1774141836::0::1::::<><><>0<>0<><>::uid://dtajdmxoi1nfl::::res://assets/images/cards/card images/cocaine.png<>res://cs/CardData.cs
+::res://character_data/::1774141836
+donut_daisy.tres::Resource/CharacterData::2273165803517149218::1774141836::0::1::::<><><>0<>0<><>::res://cs/CharacterData.cs<>uid://cm8onhg7pa38r::::res://assets/images/characters/donut_daisy.png
+ice_cream_isaac.tres::Resource/CharacterData::8008992732478122956::1774141836::0::1::::<><><>0<>0<><>::res://cs/CharacterData.cs<>uid://bag0jsvx10rad::::res://assets/images/characters/ice_cream.png
+laban_lars.tres::Resource/CharacterData::8400855621237221006::1774141836::0::1::::<><><>0<>0<><>::res://cs/CharacterData.cs<>uid://cmb200nf4yyrd::::res://assets/images/characters/laban_lars.png
+muffin_max.tres::Resource/CharacterData::2756385613960879657::1774141836::0::1::::<><><>0<>0<><>::res://cs/CharacterData.cs<>uid://bhjnrrovlyjj0::::res://assets/images/characters/muffin_max.png
+player.tres::Resource/CharacterData::7103065185089586570::1774141836::0::1::::<><><>0<>0<><>::res://cs/CharacterData.cs<>uid://csjv2jq11b2o3::::res://assets/images/characters/player.png
+::res://cs/::1774166499
+AttackAction.cs::CSharpScript::5709734072615734038::1774141837::0::1::::<>RefCounted<><>0<>0<><>::
+Card.cs::CSharpScript::4732412069665699666::1774141837::0::1::::<>Node2D<><>0<>1<><>::
+CardContainer.cs::CSharpScript::5880105034405832309::1774141837::0::1::::<>Container<><>0<>0<><>::
+CardData.cs::CSharpScript::8932424685956325298::1774141837::0::1::::<>Resource<><>0<>1<><>::
+CardWithID.cs::CSharpScript::1563563071918882125::1774141837::0::1::::<>Resource<><>0<>0<><>::
+Character.cs::CSharpScript::4127244226063747222::1774155762::0::1::::<>Node2D<><>0<>1<><>::
+CharacterData.cs::CSharpScript::7127152763289459788::1774141837::0::1::::<>Resource<><>0<>0<><>::
+ChoiceRemoveCards.cs::CSharpScript::3665274349305573081::1774141837::0::1::::<>Control<><>0<>0<><>::
+Deck.cs::CSharpScript::2002369186165149501::1774157763::0::1::::<>Resource<><>0<>0<><>::
+DeckViewControl.cs::CSharpScript::3067296965584250245::1774141837::0::1::::<>Control<><>0<>0<><>::
+DeckViewWindow.cs::CSharpScript::4973569868742709555::1774141837::0::1::::<>Control<><>0<>0<><>::
+DefenseAction1.cs::CSharpScript::3735962082256087979::1774141837::0::1::::<>RefCounted<><>0<>0<><>::
+DefenseAction5.cs::CSharpScript::8668689343658488184::1774141837::0::1::::<>RefCounted<><>0<>0<><>::
+DrawACardAction.cs::CSharpScript::2347359068516294194::1774141837::0::1::::<>RefCounted<><>0<>0<><>::
+Encounter.cs::CSharpScript::3486671363753217472::1774155341::0::1::::<>TextureButton<><>0<>1<><>::
+ExhaustAction.cs::CSharpScript::5787239167529366544::1774141837::0::1::::<>RefCounted<><>0<>0<><>::
+ExhaustOtherRandomAction.cs::CSharpScript::7916966983929498460::1774141837::0::1::::<>RefCounted<><>0<>0<><>::
+GameController.cs::CSharpScript::1709992755183735409::1774141837::0::1::::<>Node2D<><>0<>0<><>::
+GetTwoMoreManaAction.cs::CSharpScript::4556586379255746761::1774141837::0::1::::<>RefCounted<><>0<>0<><>::
+Hand.cs::CSharpScript::3581798295795646215::1774166499::0::1::::<>Node2D<><>0<>1<><>::
+HealAction.cs::CSharpScript::5148947441568068730::1774141837::0::1::::<>RefCounted<><>0<>0<><>::
+Main.cs::CSharpScript::6874938299569306458::1774160362::0::1::::<>Node2D<><>0<>0<><>::
+ManaOrb.cs::CSharpScript::7799432931100910880::1774141837::0::1::::<>Sprite2D<><>0<>0<><>::
+Map.cs::CSharpScript::1822576660721273381::1774155599::0::1::::<>Control<><>0<>0<><>::
+PlayableCard.cs::CSharpScript::1508233404288158845::1774141837::0::1::::<>Node2D<><>0<>0<><>::
+PlayableDeck.cs::CSharpScript::413205509907419582::1774157646::0::1::::<>Resource<><>0<>0<><>::
+PlayableDeckUI.cs::CSharpScript::8645751074452083815::1774157680::0::1::::<>TextureButton<><>0<>0<><>::
+RevealSecretAction.cs::CSharpScript::8540361217307177025::1774141837::0::1::::<>RefCounted<><>0<>0<><>::
+RewardCardContainer.cs::CSharpScript::5657720979039177216::1774141837::0::1::::<>Control<><>0<>0<><>::
+RewardChooseACard.cs::CSharpScript::4019769630029787536::1774141837::0::1::::<>MarginContainer<><>0<>0<><>::
+Rewards.cs::CSharpScript::5591963104856032331::1774141837::0::1::::<>Control<><>0<>0<><>::
+SecrecyBar.cs::CSharpScript::3589053519748381840::1774141837::0::1::::<>ProgressBar<><>0<>1<><>::
+STRUCTURE.md::TextFile::-1::1774141837::0::1::::<><><>0<>0<><>::
+TurnAnnouncer.cs::CSharpScript::7992667191428111805::1774156399::0::1::::<>Label<><>0<>0<><>::
+::res://cs/actions/::1774155675
+Action.cs::CSharpScript::7772817185994873977::1774155675::0::1::::<>RefCounted<><>0<>0<><>::
+ActionContext.cs::CSharpScript::4444478119408078787::1774141837::0::1::::<><><>0<>0<><>::
+DrawACardAction.cs::CSharpScript::2103249066572086047::1774141837::0::1::::<><><>0<>0<><>::
+::res://cs/Utils/::1774155708
+ArrayExtensions.cs::CSharpScript::7431654606619479484::1774155708::0::1::::<><><>0<>0<><>::
+DictionaryExtensions.cs::CSharpScript::8347409056273024936::1774141837::0::1::::<><><>0<>0<><>::
+::res://my html export/::1774153573
+avatar_me.jpg::CompressedTexture2D::4102673499040956871::1774146705::1774153573::0::::<><><>0<>0<>8a09fe42055680b0cd0c00c504d3f475<>::
+::res://scenes/::1774160353
+Character.tscn::PackedScene::8861511146778402520::1774154397::0::1::::<><><>0<>0<><>::res://cs/Character.cs<>uid://bag0jsvx10rad::::res://assets/images/characters/ice_cream.png<>uid://c8r8cjb1at4wg::::res://assets/resources/main_theme.tres<>uid://bfl76xk51hf1u::::res://assets/images/characters/icons/defense.png
+Hand.tscn::PackedScene::8354580366845068184::1774160353::0::1::::<><><>0<>0<><>::res://cs/Hand.cs<>uid://cbkph8q1bp178::::res://scenes/cards/PlayableCard.tscn
+Main.tscn::PackedScene::5387200022725322454::1774160353::0::1::::<><><>0<>0<><>::res://cs/Main.cs<>res://cs/GameController.cs<>uid://dgwxaf1naxwdx::::res://card_data/attack/gaslight.tres<>uid://c8r8cjb1at4wg::::res://assets/resources/main_theme.tres<>uid://bs3yu15jrsqc4::::res://card_data/defense/overcompensate.tres<>uid://cbkph8q1bp178::::res://scenes/cards/PlayableCard.tscn<>uid://dggmi3yjmi2hs::::res://card_data/skill/amnesia.tres<>uid://diohlghnp538v::::res://card_data/defense/denial.tres<>uid://cnyc12kujqtih::::res://card_data/skill/cocaine.tres<>uid://cr1bhgtdf5bal::::res://scenes/ui/DeckViewControl.tscn<>uid://goquvxjh3p8y::::res://card_data/tests/exhaust_test_card.tres<>uid://rbkk6al75hiy::::res://card_data/defense/appeal_to_nature_card.tres<>uid://dp25u7ocj871r::::res://scenes/ui/mana_orb.tscn<>uid://cr68yucq0177l::::res://card_data/defense/strawman.tres<>uid://drbayobfjnntg::::res://scenes/Hand.tscn<>uid://dyit180vdx2qe::::res://scenes/Character.tscn<>uid://blaycm7luhqkl::::res://card_data/attack/ad_hominem.tres<>uid://d2u3e4rw37fxf::::res://card_data/skill/bandwagon.tres<>uid://dbt3cfgdkh528::::res://scenes/map/Map.tscn<>uid://csycik0pxrnh3::::res://card_data/secret/false_lead.tres<>uid://meyhny1q32ic::::res://scenes/ui/TurnAnnouncer.tscn<>uid://co42op7ql70qu::::res://scenes/ui/Rewards.tscn<>uid://d1ni5upcefubs::::res://scenes/ui/ViewDeckButton.tscn<>uid://c8g1pfm2qxi0a::::res://character_data/player.tres<>uid://dmdu673wjnv3i::::res://character_data/ice_cream_isaac.tres<>uid://bjyjrshsnl4ao::::res://assets/images/ui/map_normal.png<>uid://b8cf5ve82x7hv::::res://scenes/ui/discard_pile.tscn<>uid://d1h8u0gquq3x2::::res://assets/images/backgrounds/background_test.png<>uid://dng3qw7ctwls2::::res://assets/images/ui/map_pressed.png<>uid://dddavuqmsq4ei::::res://scenes/ui/draw_pile.tscn<>uid://chc5rigmc2qya::::res://assets/images/ui/map_hover.png<>uid://d3udvqgwbws15::::res://scenes/ui/SecrecyBar.tscn<>uid://y6pa31sr5nt5::::res://scenes/ui/RemoveChooseACard.tscn<>uid://cf1amttorpsv5::::res://assets/audio/music/CardGame_Soundtrack.wav<>uid://bg2o3fm2y8si8::::res://assets/audio/sfx/GGA_DeckDeal.wav<>uid://wuxls2wq8twc::::res://assets/audio/sfx/GGA_CardFlip_1.wav<>uid://bg0tx4aruc70t::::res://assets/audio/music/CardGame_Soundtrack_2.wav<>uid://ckmvwt1vmi87d::::res://assets/audio/sfx/GGA_CardFlip_2.wav<>uid://dsp4xmuekr2ig::::res://assets/audio/sfx/GGA_CardFlip_3.wav<>uid://dr27n3daxgjtp::::res://assets/audio/sfx/GGA_LanternBash.wav<>uid://dca864uolx4rb::::res://assets/audio/sfx/GGA_ShieldSelf.wav<>uid://v8m5qlphupm6::::res://assets/audio/sfx/GGA_Button.wav<>uid://da3ik74da5sil::::res://assets/audio/sfx/GGA_CardBurn.wav
+::res://scenes/cards/::1774154397
+Card.tscn::PackedScene::6845671460682407719::1774154397::0::1::::<><><>0<>0<><>::res://cs/Card.cs<>uid://dv1stdckgs7l5::::res://assets/images/cards/core card/card_border.png<>uid://b7a04cmjjvgua::::res://assets/images/cards/core card/card.png<>uid://gm5phtwk456g::::res://assets/images/cards/core card/card_cost.png<>uid://c8r8cjb1at4wg::::res://assets/resources/main_theme.tres
+PlayableCard.tscn::PackedScene::4864599003184366993::1774154397::0::1::::<><><>0<>0<><>::res://cs/PlayableCard.cs<>uid://c4sdhdmmxwye6::::res://scenes/cards/Card.tscn
+::res://scenes/map/::1774155040
+encounter.tscn::PackedScene::732119096662007856::1774154397::0::1::::<><><>0<>0<><>::uid://6jfb8dt00lrj::::res://assets/images/map/encounter_normal.png<>uid://c4bsq5qy7m5uv::::res://assets/images/map/encounter_pressed.png<>uid://uw1xa2kxwu52::::res://assets/images/map/encounter_hover.png<>uid://bysojg3cknplm::::res://assets/images/map/encounter_disabled.png<>res://cs/Encounter.cs<>uid://c8r8cjb1at4wg::::res://assets/resources/main_theme.tres<>uid://c8g1pfm2qxi0a::::res://character_data/player.tres
+Map.tscn::PackedScene::7270377991465299687::1774155040::0::1::::<><><>0<>0<><>::res://cs/Map.cs<>uid://c6y8ocfgu5uqi::::res://assets/images/map/map.png<>uid://c8r8cjb1at4wg::::res://assets/resources/main_theme.tres<>uid://kov5odyf4pho::::res://scenes/map/encounter.tscn<>uid://1vnisugvhetm::::res://scenes/map/MapDottedLine2D.tscn<>uid://dmdu673wjnv3i::::res://character_data/ice_cream_isaac.tres<>uid://bfjhjehgmwvkr::::res://character_data/muffin_max.tres<>uid://7neydhttfjw1::::res://character_data/donut_daisy.tres<>uid://c6bxgdfleyq10::::res://assets/audio/sfx/GGA_Map_Open.wav<>uid://drxo4nuhvg3q5::::res://character_data/laban_lars.tres<>uid://dm5mier1tg3ic::::res://assets/audio/sfx/GGA_Map_Select.wav
+MapDottedLine2D.tscn::PackedScene::1869066451298647402::1774154980::0::1::::<><><>0<>0<><>::uid://cmylhxkckjble::::res://assets/images/map/dotted_line.png
+::res://scenes/ui/::1774154397
+CardContainer.tscn::PackedScene::3266325533011421142::1774154397::0::1::::<><><>0<>0<><>::res://cs/CardContainer.cs<>uid://cbkph8q1bp178::::res://scenes/cards/PlayableCard.tscn
+CardGallery.tscn::PackedScene::-1::1774154397::0::1::::<><><>0<>0<><>::
+DeckViewControl.tscn::PackedScene::6019799093023960559::1774154397::0::1::::<><><>0<>0<><>::res://cs/DeckViewControl.cs<>uid://bqim5c7s6n81g::::res://scenes/ui/DeckViewWindow.tscn<>uid://c8r8cjb1at4wg::::res://assets/resources/main_theme.tres<>uid://bsoxtamxn2a7l::::res://assets/audio/sfx/GGA_DiscardDeck_Open.wav<>uid://3swvijq03ywg::::res://assets/audio/sfx/GGA_DrawDeck_Close.wav<>uid://bnujs3i2uerem::::res://assets/audio/sfx/GGA_DrawDeck_Open.wav
+DeckViewWindow.tscn::PackedScene::3526739537004697494::1774154397::0::1::::<><><>0<>0<><>::res://cs/DeckViewWindow.cs<>uid://bmsh50ndo3ouw::::res://scenes/ui/CardContainer.tscn
+discard_pile.tscn::PackedScene::4707139548743230475::1774154397::0::1::::<><><>0<>0<><>::uid://bdojceij58f10::::res://assets/images/ui/discard_pile_normal.png<>uid://btvtj0qvwixyc::::res://assets/images/ui/discard_pile_pressed.png<>uid://cp2kehc1qtxjr::::res://assets/images/ui/discard_pile_hover.png<>res://cs/PlayableDeckUI.cs<>uid://di8exfyrvob1a::::res://assets/images/ui/number_circle.png<>uid://c8r8cjb1at4wg::::res://assets/resources/main_theme.tres
+draw_pile.tscn::PackedScene::7376060292681397668::1774154397::0::1::::<><><>0<>0<><>::uid://bbt5ywq428psw::::res://assets/images/ui/draw_pile_normal.png<>uid://d0x67grk6b78e::::res://assets/images/ui/draw_pile_pressed.png<>uid://b65u5dn2xodcf::::res://assets/images/ui/draw_pile_hover.png<>res://cs/PlayableDeckUI.cs<>uid://di8exfyrvob1a::::res://assets/images/ui/number_circle.png<>uid://c8r8cjb1at4wg::::res://assets/resources/main_theme.tres
+mana_orb.tscn::PackedScene::8269691833149193949::1774154397::0::1::::<><><>0<>0<><>::uid://c1y6sqgrl0bc::::res://assets/images/ui/mana_orb.png<>res://cs/ManaOrb.cs<>uid://c8r8cjb1at4wg::::res://assets/resources/main_theme.tres<>uid://bnookiaccsmor::::res://assets/audio/sfx/GGA_ManaGlass.wav<>uid://dwu3gf3km7hth::::res://assets/audio/sfx/GGA_ManaGlass_Empty.wav
+PlayableDeckUI.tscn::PackedScene::3099044669942461695::1774154397::0::1::::<><><>0<>0<><>::uid://c7jsv1yld1oq8::::res://assets/images/deck/deck_normal.png<>res://cs/PlayableDeckUI.cs<>uid://biyyidgbygajo::::res://assets/images/deck/deck_pressed.png<>uid://tp2rl6f6gv38::::res://assets/images/deck/deck_hover.png<>uid://bepsy5bwbogoo::::res://assets/images/deck/deck_disabled.png<>uid://c8r8cjb1at4wg::::res://assets/resources/main_theme.tres
+RemoveChooseACard.tscn::PackedScene::1749440224240596248::1774154397::0::1::::<><><>0<>0<><>::res://cs/ChoiceRemoveCards.cs<>uid://c8r8cjb1at4wg::::res://assets/resources/main_theme.tres<>uid://63ourneieubs::::res://scenes/ui/RewardCardContainer.tscn
+RewardCardContainer.tscn::PackedScene::2234543396841528676::1774154397::0::1::::<><><>0<>0<><>::res://cs/RewardCardContainer.cs<>uid://cbkph8q1bp178::::res://scenes/cards/PlayableCard.tscn
+RewardChooseACard.tscn::PackedScene::8562567702289873326::1774154397::0::1::::<><><>0<>0<><>::res://cs/RewardChooseACard.cs<>uid://c8r8cjb1at4wg::::res://assets/resources/main_theme.tres<>uid://63ourneieubs::::res://scenes/ui/RewardCardContainer.tscn<>uid://c3go1vgcgl7ow::::res://card_data/tests/test.tres
+Rewards.tscn::PackedScene::5817017331132699208::1774154397::0::1::::<><><>0<>0<><>::uid://bovafqk1cu6ur::::res://assets/images/ui/panel.png<>uid://c8r8cjb1at4wg::::res://assets/resources/main_theme.tres<>res://cs/Rewards.cs<>uid://dt81ielvak0a1::::res://scenes/ui/RewardChooseACard.tscn<>res://cs/CardData.cs<>uid://dggmi3yjmi2hs::::res://card_data/skill/amnesia.tres<>uid://cnyc12kujqtih::::res://card_data/skill/cocaine.tres<>uid://csycik0pxrnh3::::res://card_data/secret/false_lead.tres<>uid://dgwxaf1naxwdx::::res://card_data/attack/gaslight.tres<>uid://bs3yu15jrsqc4::::res://card_data/defense/overcompensate.tres<>uid://rbkk6al75hiy::::res://card_data/defense/appeal_to_nature_card.tres<>uid://diohlghnp538v::::res://card_data/defense/denial.tres<>uid://cr68yucq0177l::::res://card_data/defense/strawman.tres<>uid://blaycm7luhqkl::::res://card_data/attack/ad_hominem.tres<>uid://d2u3e4rw37fxf::::res://card_data/skill/bandwagon.tres
+SecrecyBar.tscn::PackedScene::9166057731319938522::1774154397::0::1::::<><><>0<>0<><>::uid://c8r8cjb1at4wg::::res://assets/resources/main_theme.tres<>res://cs/SecrecyBar.cs<>uid://df3is3dsgx8f2::::res://assets/audio/sfx/GGA_SecretBarFull.wav<>uid://d1ss7tplvbndx::::res://assets/audio/sfx/GGA_SecretCard.wav
+TurnAnnouncer.tscn::PackedScene::851994064139049374::1774154397::0::1::::<><><>0<>0<><>::uid://c8r8cjb1at4wg::::res://assets/resources/main_theme.tres<>res://cs/TurnAnnouncer.cs
+ViewDeckButton.tscn::PackedScene::9011549279965705836::1774154397::0::1::::<><><>0<>0<><>::uid://btbjh6oo15ikm::::res://assets/images/ui/deck_normal.png<>uid://uvpbpv63aqm2::::res://assets/images/ui/deck_pressed.png<>uid://bu3dh7yxpxclg::::res://assets/images/ui/deck_hover.png<>res://cs/PlayableDeckUI.cs<>uid://c8r8cjb1at4wg::::res://assets/resources/main_theme.tres

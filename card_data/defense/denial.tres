@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="CardData" load_steps=5 format=3 uid="uid://diohlghnp538v"]
+
+[ext_resource type="Script" path="res://cs/DrawACardAction.cs" id="1_5w7n1"]
+[ext_resource type="Script" path="res://cs/DefenseAction1.cs" id="2_fxjxs"]
+[ext_resource type="Texture2D" uid="uid://de7yrjavr483p" path="res://assets/images/cards/card images/denial.png" id="3_3mthw"]
+[ext_resource type="Script" path="res://cs/CardData.cs" id="3_u4kqf"]
+
+[resource]
+script = ExtResource("3_u4kqf")
+title = "Denial"
+description = "+1 armor. Draw a card."
+cost = 2
+image = ExtResource("3_3mthw")
+type = 1
+actions = Array[Script]([ExtResource("1_5w7n1"), ExtResource("2_fxjxs")])

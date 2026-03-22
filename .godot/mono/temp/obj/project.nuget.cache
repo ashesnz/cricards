@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "dgSpecHash": "ysAIMBKga3Q=",
+  "success": true,
+  "projectFilePath": "/Users/ashwin/Source/Godot/game-off-2024/GameOff.csproj",
+  "expectedPackageFiles": [
+    "/Users/ashwin/.nuget/packages/godot.sourcegenerators/4.5.1/godot.sourcegenerators.4.5.1.nupkg.sha512",
+    "/Users/ashwin/.nuget/packages/godotsharp/4.5.1/godotsharp.4.5.1.nupkg.sha512",
+    "/Users/ashwin/.nuget/packages/godotsharpeditor/4.5.1/godotsharpeditor.4.5.1.nupkg.sha512",
+    "/Users/ashwin/.nuget/packages/microsoft.netcore.app.ref/8.0.25/microsoft.netcore.app.ref.8.0.25.nupkg.sha512",
+    "/Users/ashwin/.nuget/packages/microsoft.aspnetcore.app.ref/8.0.25/microsoft.aspnetcore.app.ref.8.0.25.nupkg.sha512"
+  ],
+  "logs": []
+}
