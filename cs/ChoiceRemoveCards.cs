@@ -54,7 +54,7 @@ public partial class ChoiceRemoveCards : Control
         else
             GD.Print("emitting null");
 
-        EmitSignal(SignalName.Chosen, (object)playable_card);
+        EmitSignal(SignalName.Chosen, (GodotObject)playable_card);
         Visible = false;
     }
 }

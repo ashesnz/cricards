@@ -106,7 +106,7 @@ public partial class Map : Control
 
     private void _OnEncounterPressed(Encounter encounter)
     {
-        EmitSignal(SignalName.Chosen, (object)encounter);
+        EmitSignal(SignalName.Chosen, (GodotObject)encounter);
     }
 
     public Array GetAllEncounters()

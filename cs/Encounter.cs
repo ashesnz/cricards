@@ -51,7 +51,7 @@ public partial class Encounter : TextureButton
 
     private void _OnPressed()
     {
-        EmitSignal(SignalName.Chosen, (object)this);
+        EmitSignal(SignalName.Chosen, (GodotObject)this);
     }
 }
 

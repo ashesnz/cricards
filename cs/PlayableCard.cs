@@ -54,12 +54,12 @@ public partial class PlayableCard : Control
 
     private void _on_card_mouse_entered(Card c)
     {
-        EmitSignal("PlayableCardMouseEntered", (object)this);
+        EmitSignal("PlayableCardMouseEntered", (GodotObject)this);
     }
 
     private void _on_card_mouse_exited(Card c)
     {
-        EmitSignal("PlayableCardMouseExited", (object)this);
+        EmitSignal("PlayableCardMouseExited", (GodotObject)this);
     }
 
     // Expose the visual minimum size of this playable card to layout code

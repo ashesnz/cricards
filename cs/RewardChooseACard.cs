@@ -50,13 +50,13 @@ public partial class RewardChooseACard : MarginContainer
 
     private void _OnChosen(PlayableCard playable_card)
     {
-        EmitSignal(SignalName.Chosen, (object)playable_card);
+        EmitSignal(SignalName.Chosen, (GodotObject)playable_card);
         Visible = false;
     }
 
     private CardData _GetReward(bool is_revealed_secret)
     {
-        CardData reward = null;
+        CardData? reward = null;
         while (reward == null)
         {
             if (is_revealed_secret)
@@ -70,12 +70,15 @@ public partial class RewardChooseACard : MarginContainer
                 reward = o as CardData;
             }
 
+            if (reward == null)
+                continue;
+
             if (!_chosen_rewards.Contains(reward))
                 _chosen_rewards.Add(reward);
             else
                 reward = null;
         }
-        return reward;
+        return reward!;
     }
 }
 
