@@ -3,7 +3,7 @@ using Godot.Collections;
 
 public partial class Rewards : Control
 {
-	[Signal] public delegate void ChosenEventHandler(PlayableCard playable_card);
+	[Signal] public delegate void ChosenEventHandler(PlayableCard? playable_card);
 
 	public int num_rewards = 1;
 
@@ -60,9 +60,12 @@ public partial class Rewards : Control
 		}
 	}
 
-	private void _OnChosen(PlayableCard playable_card)
+	private void _OnChosen(PlayableCard? playable_card)
 	{
-		EmitSignal(SignalName.Chosen, (object)playable_card);
+		if (playable_card != null)
+			EmitSignal(SignalName.Chosen, (GodotObject)playable_card);
+		else
+			EmitSignal(SignalName.Chosen, new Variant());
 		if (rewards_panel != null) rewards_panel.Visible = true;
 	}
 }

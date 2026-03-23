@@ -131,7 +131,9 @@ public partial class Main : Node2D
         // Show 6 random cards at the bottom as the starting hand
         GD.Print("[MAIN DEBUG] Beginning to deal starting hand...");
         _deal_starting_hand(6);
-        turn_announcer?.Announce("Steal the secrets of sugar city!", turn_announcer.TotalDuration * 2.5f);
+        // Avoid referencing turn_announcer properties while using the null-conditional operator.
+        if (turn_announcer != null)
+            turn_announcer.Announce("Steal the secrets of sugar city!", turn_announcer.TotalDuration * 2.5f);
 
         _original_music_volume = GetMusicBusVolume();
 
@@ -201,7 +203,7 @@ public partial class Main : Node2D
         game_controller?.Transition(GameController.GameState.PLAYER_TURN);
         player_character?.StartTurn();
         mana_orb?.FillUpAnimation();
-        if (mana_orb != null && player_character != null) mana_orb.Label.Text = player_character.mana.ToString();
+        if (mana_orb != null && player_character != null && mana_orb.Label != null) mana_orb.Label.Text = player_character.mana.ToString();
         _deal_to_hand();
     }
 
@@ -209,7 +211,7 @@ public partial class Main : Node2D
     {
         game_controller?.Transition(GameController.GameState.ENEMY_TURN);
         enemy_character?.StartTurn();
-        Tween tween = null;
+        Tween? tween = null;
 
         switch (enemy_character_state)
         {
@@ -286,7 +288,7 @@ public partial class Main : Node2D
         if (hand == null) return;
         foreach (object obj in hand.Empty())
         {
-            PlayableCard playable_card = null;
+            PlayableCard? playable_card = null;
             if (obj is PlayableCard pc) playable_card = pc;
             else
             {
@@ -338,7 +340,7 @@ public partial class Main : Node2D
                 else if (action is ExhaustOtherRandomAction)
                 {
                     // Pick random card safely
-                    PlayableCard random_card = null;
+                    PlayableCard? random_card = null;
                     if (hand != null && hand.cards.Count > 0)
                     {
                         var rng = new RandomNumberGenerator(); rng.Randomize();
@@ -347,7 +349,7 @@ public partial class Main : Node2D
                         random_card = maybe as PlayableCard;
                     }
                     if (random_card != null) random_card.exhausted = true;
-                    if (random_card != null) hand.RemoveByEntity(random_card);
+                    if (random_card != null && hand != null) hand.RemoveByEntity(random_card);
                 }
                 else if (action is RevealSecretAction rsa)
                 {
@@ -383,10 +385,11 @@ public partial class Main : Node2D
         }
 
         player_character?.SpendMana(card_cost);
-        if (mana_orb != null && player_character != null && mana_orb.Label != null) mana_orb.Label.Text = player_character.mana.ToString();
+        if (mana_orb != null && player_character != null && mana_orb.Label != null)
+            mana_orb.Label.Text = player_character.mana.ToString();
         if (player_character != null && player_character.mana > 0) mana_orb?.SpendAnimation(); else mana_orb?.EmptyAnimation();
 
-        hand.RemoveByEntity(playable_card);
+        hand?.RemoveByEntity(playable_card);
         if (!playable_card.exhausted)
             discard_pile?.AddCardOnTop(deck.GetCard(playable_card.id));
         if (discard_pile != null) discard_pile.Disabled = discard_pile.deck.Size() <= 0;
@@ -425,7 +428,7 @@ public partial class Main : Node2D
         enemy_character?.HardReset();
         enemy_character_state = 0;
         hand?.Empty();
-        if (mana_orb != null && player_character != null) mana_orb.Label.Text = player_character.mana.ToString();
+        if (mana_orb != null && player_character != null && mana_orb.Label != null) mana_orb.Label.Text = player_character.mana.ToString();
 
         if (view_deck_button != null) { view_deck_button.Disabled = deck.GetPlayableDeck().Size() == 0; view_deck_button.deck = deck.GetPlayableDeck(); view_deck_button.SetLabelDeckSize(); }
 
@@ -455,11 +458,11 @@ public partial class Main : Node2D
         tween.TweenCallback(Callable.From(() => { if (end_turn_button != null) end_turn_button.Disabled = false; })).SetDelay(0);
     }
 
-    private void _draw_a_card_to_hand(Tween tween, int cards_to_be_dealt)
+    private void _draw_a_card_to_hand(Tween? tween, int cards_to_be_dealt)
     {
-        if (tween == null) tween = CreateTween();
+        var activeTween = tween ?? CreateTween();
         _check_transfer_from_discard_to_draw_pile(cards_to_be_dealt);
-        tween.TweenCallback(Callable.From(() => _draw_card_to_hand())).SetDelay(0.2f);
+        activeTween.TweenCallback(Callable.From(() => _draw_card_to_hand())).SetDelay(0.2f);
     }
 
     private void _on_view_deck_button_pressed()
@@ -469,7 +472,7 @@ public partial class Main : Node2D
 
     private void _on_draw_pile_pressed()
     {
-        _toggle_deck_view(draw_pile.deck.ToArray(), DeckViewControl.Type.DRAW_PILE);
+        if (draw_pile != null) _toggle_deck_view(draw_pile.deck.ToArray(), DeckViewControl.Type.DRAW_PILE);
     }
 
     private void _on_view_map_button_pressed()
@@ -479,14 +482,14 @@ public partial class Main : Node2D
 
     private void _on_discard_pile_pressed()
     {
-        _toggle_deck_view(discard_pile.deck.ToArray(), DeckViewControl.Type.DISCARD_PILE);
+        if (discard_pile != null) _toggle_deck_view(discard_pile.deck.ToArray(), DeckViewControl.Type.DISCARD_PILE);
     }
 
     private void _toggle_deck_view(Godot.Collections.Array deckArr, DeckViewControl.Type type)
     {
         game_controller?.TogglePauseAndResume();
         if (deck_view_control != null) deck_view_control.Visible = !deck_view_control.Visible;
-        deck_view_control?.DeckViewWindow.DisplayCardList(deckArr);
+        deck_view_control?.DeckViewWindow?.DisplayCardList(deckArr);
         deck_view_control?.SetType(type);
         deck_view_control?.PlayAudio(type, game_controller != null && game_controller.is_running);
     }
@@ -518,14 +521,14 @@ public partial class Main : Node2D
 
     private void _check_transfer_from_discard_to_draw_pile(int cards_to_be_dealt)
     {
-        if (draw_pile != null && draw_pile.GetNumberOfCards() < cards_to_be_dealt)
+        if (draw_pile != null && discard_pile != null && draw_pile.GetNumberOfCards() < cards_to_be_dealt)
         {
             var number_of_cards = discard_pile.GetNumberOfCards();
             discard_pile.deck.Shuffle();
             for (int i = 0; i < number_of_cards; i++)
                 draw_pile.AddCardOnBottom(discard_pile.Draw());
-            if (draw_pile != null) draw_pile.Disabled = false;
-            if (discard_pile != null) discard_pile.Disabled = true;
+            draw_pile.Disabled = false;
+            discard_pile.Disabled = true;
         }
         discard_pile?.SetLabelDeckSize();
     }
@@ -540,7 +543,7 @@ public partial class Main : Node2D
             return;
         }
 
-        draw_pile.SetLabelDeckSize();
+        draw_pile?.SetLabelDeckSize();
         if (playable_card_scene == null)
         {
             GD.PrintErr("playable_card_scene is null; cannot instantiate playable card.");
@@ -557,11 +560,20 @@ public partial class Main : Node2D
         if (card_with_id.Card != null)
             playable_card.LoadCardData(card_with_id.Card);
         playable_card.id = card_with_id.Id;
-        try { playable_card.GlobalPosition = hand.GlobalPosition; } catch { playable_card.Position = Vector2.Zero; }
+        // Position the new playable card at the hand's global position if available.
+        if (hand != null)
+        {
+            try { playable_card.GlobalPosition = hand.GlobalPosition; }
+            catch { playable_card.Position = Vector2.Zero; }
+        }
+        else
+        {
+            playable_card.Position = Vector2.Zero;
+        }
         RemoveChild(playable_card);
-        hand.AddCard(playable_card);
+        hand?.AddCard(playable_card);
 
-        if (draw_pile.GetNumberOfCards() == 0)
+        if (draw_pile != null && draw_pile.GetNumberOfCards() == 0)
             draw_pile.Disabled = true;
     }
 
@@ -589,24 +601,36 @@ public partial class Main : Node2D
             if (card_with_id.Card != null)
                 playable_card.LoadCardData(card_with_id.Card);
             playable_card.id = card_with_id.Id;
-            try { playable_card.GlobalPosition = hand.GlobalPosition; } catch { playable_card.Position = Vector2.Zero; }
+            if (hand != null)
+            {
+                try { playable_card.GlobalPosition = hand.GlobalPosition; } catch { playable_card.Position = Vector2.Zero; }
+            }
+            else
+            {
+                playable_card.Position = Vector2.Zero;
+            }
             RemoveChild(playable_card);
-            hand.AddCard(playable_card);
-            GD.Print($"[MAIN DEBUG] _deal_starting_hand: added playable_card id={playable_card.id}; hand.cards.Count={hand.cards.Count}");
+            hand?.AddCard(playable_card);
+            GD.Print($"[MAIN DEBUG] _deal_starting_hand: added playable_card id={playable_card.id}; hand.cards.Count={hand?.cards.Count}");
         }
 
         // Update UI deck counters
-        draw_pile.SetLabelDeckSize();
+        draw_pile?.SetLabelDeckSize();
         discard_pile?.SetLabelDeckSize();
 
         // Debug output: viewport and hand/card positions to help track visibility issues
         var rect = GetViewport().GetVisibleRect();
         GD.Print($"[DEBUG] viewport size = {rect.Size}");
-        GD.Print($"[DEBUG] hand global position = {hand.GlobalPosition}, hand position = {hand.Position}");
-        GD.Print($"[DEBUG] hand.cards count = {hand.cards.Count}");
-        for (int i = 0; i < hand.cards.Count; i++)
+        if (hand != null)
         {
-            object obj = hand.cards[i];
+            GD.Print($"[DEBUG] hand global position = {hand.GlobalPosition}, hand position = {hand.Position}");
+            GD.Print($"[DEBUG] hand.cards count = {hand.cards.Count}");
+        }
+        if (hand != null)
+        {
+            for (int i = 0; i < hand.cards.Count; i++)
+            {
+                object obj = hand.cards[i];
             string typeName = obj != null ? obj.GetType().ToString() : "<null>";
             bool isPlayable = obj is PlayableCard;
             bool isNode = obj is Node;
@@ -615,6 +639,7 @@ public partial class Main : Node2D
             if (pc != null)
             {
                 GD.Print($"[DEBUG] card[{i}] id={pc.id} visible={pc.Visible} global_pos={pc.GlobalPosition} pos={pc.Position}");
+            }
             }
         }
     }
@@ -670,34 +695,37 @@ public partial class Main : Node2D
             if (mb2 != null) mb2.Visible = false;
         }
 
-        if (map != null && map.IsAllEncountersDefeated())
+        // Cache map into a local non-null variable so the nullable analyzer
+        // can prove subsequent dereferences are safe.
+        if (map != null)
         {
-            map.EnableAllEncounters();
-            ascension_level += 1;
-            remove_choose_a_card?.Activate(deck);
-            if (map != null)
+            var localMap = map;
+            if (localMap.IsAllEncountersDefeated())
             {
-                var ascLabel = map.GetNodeOrNull<Label>("AscensionLabel");
+                localMap.EnableAllEncounters();
+                ascension_level += 1;
+                remove_choose_a_card?.Activate(deck);
+                var ascLabel = localMap.GetNodeOrNull<Label>("AscensionLabel");
                 if (ascLabel != null)
                 {
                     ascLabel.Visible = true;
                     ascLabel.Text = "Ascension: " + ascension_level.ToString();
                 }
-            }
 
-            foreach (object encObj in map.GetAllEncounters())
-            {
-                var enc = encObj as Encounter;
-                if (enc == null) continue;
-                var cd = enc.GetCharacterData();
-                if (cd != null)
+                foreach (object encObj in localMap.GetAllEncounters())
                 {
-                    cd.MaxHealth = (int)(cd.MaxHealth * ascension_modifier);
-                    cd.NumSecrets = (int)(cd.NumSecrets * ascension_modifier);
+                    var enc = encObj as Encounter;
+                    if (enc == null) continue;
+                    var cd = enc.GetCharacterData();
+                    if (cd != null)
+                    {
+                        cd.MaxHealth = (int)(cd.MaxHealth * ascension_modifier);
+                        cd.NumSecrets = (int)(cd.NumSecrets * ascension_modifier);
+                    }
                 }
-            }
 
-            ascension_modifier *= ascension_modifier;
+                ascension_modifier *= ascension_modifier;
+            }
         }
     }
 

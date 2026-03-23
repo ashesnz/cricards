@@ -48,9 +48,12 @@ public partial class RewardChooseACard : MarginContainer
         }
     }
 
-    private void _OnChosen(PlayableCard playable_card)
+    private void _OnChosen(PlayableCard? playable_card)
     {
-        EmitSignal(SignalName.Chosen, (GodotObject)playable_card);
+        if (playable_card != null)
+            EmitSignal(SignalName.Chosen, (GodotObject)playable_card);
+        else
+            EmitSignal(SignalName.Chosen, new Variant());
         Visible = false;
     }
 

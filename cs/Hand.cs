@@ -355,29 +355,32 @@ public partial class Hand : Control
             float half = min_card_gap / 2.0f; // default half-width fallback
             if (c?.Card != null)
             {
+                // Cache the Card node to a local variable to avoid repeated
+                // null-conditional access which can confuse the nullable analyzer.
+                var cardNode = c.Card;
                 // Prefer using RectMinSize if already computed on the card control
                 try
                 {
-                                if (c.MinSize != Vector2.Zero)
-                                            {
-                                                half = c.MinSize.X / 2.0f;
-                                            }
+                    if (c.MinSize != Vector2.Zero)
+                    {
+                        half = c.MinSize.X / 2.0f;
+                    }
                     else
                     {
-                        var sprite = c.Card?.GetNodeOrNull<TextureRect>("CardSprite");
+                        var sprite = cardNode.GetNodeOrNull<TextureRect>("CardSprite");
                         if (sprite != null && sprite.Texture != null)
                         {
                             var tex = sprite.Texture;
                             Vector2 texSize = tex.GetSize();
-                            float scaleX = sprite.Scale.X != 0 ? sprite.Scale.X : (c.Card.Scale.X != 0 ? c.Card.Scale.X : 1.0f);
+                            float scaleX = sprite.Scale.X != 0 ? sprite.Scale.X : (cardNode.Scale.X != 0 ? cardNode.Scale.X : 1.0f);
                             scaleX *= c.Scale.X != 0 ? c.Scale.X : 1.0f;
                             half = (texSize.X * scaleX) / 2.0f;
                         }
-                        else if (c.Card.image != null)
+                        else if (cardNode.image != null)
                         {
-                            var tex = c.Card.image;
+                            var tex = cardNode.image;
                             Vector2 texSize = tex.GetSize();
-                            float scaleX = c.Card.Scale.X != 0 ? c.Card.Scale.X : 1.0f;
+                            float scaleX = cardNode.Scale.X != 0 ? cardNode.Scale.X : 1.0f;
                             scaleX *= c.Scale.X != 0 ? c.Scale.X : 1.0f;
                             half = (texSize.X * scaleX) / 2.0f;
                         }

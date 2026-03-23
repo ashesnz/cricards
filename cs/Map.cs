@@ -137,7 +137,7 @@ public partial class Map : Control
 
             foreach (object connectionObj in rawConnections)
             {
-                Encounter enc2 = null;
+                Encounter? enc2 = null;
 
                 // Direct Encounter reference
                 enc2 = connectionObj as Encounter;

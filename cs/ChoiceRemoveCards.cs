@@ -54,7 +54,12 @@ public partial class ChoiceRemoveCards : Control
         else
             GD.Print("emitting null");
 
-        EmitSignal(SignalName.Chosen, (GodotObject)playable_card);
+        // Emit the typed PlayableCard (or an explicit Variant.Null) to avoid
+        // passing a possibly-null GodotObject into the implicit Variant conversion.
+        if (playable_card != null)
+            EmitSignal(SignalName.Chosen, (GodotObject)playable_card);
+        else
+            EmitSignal(SignalName.Chosen, new Variant());
         Visible = false;
     }
 }
