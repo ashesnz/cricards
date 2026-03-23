@@ -1,7 +1,7 @@
 is_global = true
 build_property.GodotDisabledSourceGenerators = 
-build_property.GodotProjectDir = /Users/ashwin/Source/Godot/game-off-2024/
-build_property.GodotProjectDirBase64 = L1VzZXJzL2FzaHdpbi9Tb3VyY2UvR29kb3QvZ2FtZS1vZmYtMjAyNC8=
+build_property.GodotProjectDir = /Users/ashwin/Source/Godot/cricards/
+build_property.GodotProjectDirBase64 = L1VzZXJzL2FzaHdpbi9Tb3VyY2UvR29kb3QvY3JpY2FyZHMv
 build_property.GodotSourceGenerators = 
 build_property.IsGodotToolsProject = 
 build_property.TargetFramework = net8.0
@@ -15,7 +15,7 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = GameOff
-build_property.ProjectDir = /Users/ashwin/Source/Godot/game-off-2024/
+build_property.ProjectDir = /Users/ashwin/Source/Godot/cricards/
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.EffectiveAnalysisLevelStyle = 8.0

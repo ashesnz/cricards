@@ -1,4 +1,3 @@
-++ Begin File
 [gd_scene load_steps=2 format=3 uid="uid://sixcardhand"]
 
 [ext_resource type="Script" path="res://cs/Hand.cs" id="1_hand"]
@@ -10,4 +9,3 @@ script = ExtResource("1_hand")
 alignment = 1
 separation = 20
 
-++ End File

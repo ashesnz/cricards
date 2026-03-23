@@ -21,7 +21,7 @@ public partial class RewardCardContainer : Control
 
     public override void _Input(InputEvent @event)
     {
-        if (@event.IsActionPressed("mouse_click") && mouse_over)
+        if (@event.IsActionPressed("mouse_click") && mouse_over && playable_card != null)
             EmitSignal(SignalName.Chosen, playable_card);
     }
 
@@ -31,7 +31,8 @@ public partial class RewardCardContainer : Control
         var tween = CreateTween();
         tween.SetTrans(Tween.TransitionType.Circ);
         tween.SetEase(Tween.EaseType.Out);
-        tween.TweenProperty(playable_card, "scale", Vector2.One * 1.375f, 0.75f);
+        if (playable_card != null)
+            tween.TweenProperty(playable_card, "scale", Vector2.One * 1.375f, 0.75f);
     }
 
     private void _OnMouseExited(PlayableCard pc)
@@ -40,7 +41,8 @@ public partial class RewardCardContainer : Control
         var tween = CreateTween();
         tween.SetTrans(Tween.TransitionType.Circ);
         tween.SetEase(Tween.EaseType.Out);
-        tween.TweenProperty(playable_card, "scale", Vector2.One, 0.75f);
+        if (playable_card != null)
+            tween.TweenProperty(playable_card, "scale", Vector2.One, 0.75f);
     }
 }
 

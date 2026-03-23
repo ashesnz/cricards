@@ -11,3 +11,12 @@
 /Users/ashwin/Source/Godot/game-off-2024/.godot/mono/temp/obj/Debug/refint/GameOff.dll
 /Users/ashwin/Source/Godot/game-off-2024/.godot/mono/temp/obj/Debug/GameOff.pdb
 /Users/ashwin/Source/Godot/game-off-2024/.godot/mono/temp/obj/Debug/ref/GameOff.dll
+/Users/ashwin/Source/Godot/cricards/.godot/mono/temp/obj/Debug/GameOff.csproj.AssemblyReference.cache
+/Users/ashwin/Source/Godot/cricards/.godot/mono/temp/obj/Debug/GameOff.GeneratedMSBuildEditorConfig.editorconfig
+/Users/ashwin/Source/Godot/cricards/.godot/mono/temp/obj/Debug/GameOff.AssemblyInfoInputs.cache
+/Users/ashwin/Source/Godot/cricards/.godot/mono/temp/obj/Debug/GameOff.AssemblyInfo.cs
+/Users/ashwin/Source/Godot/cricards/.godot/mono/temp/obj/Debug/GameOff.csproj.CoreCompileInputs.cache
+/Users/ashwin/Source/Godot/cricards/.godot/mono/temp/obj/Debug/GameOff.sourcelink.json
+/Users/ashwin/Source/Godot/cricards/.godot/mono/temp/obj/Debug/GameOff.dll
+/Users/ashwin/Source/Godot/cricards/.godot/mono/temp/obj/Debug/refint/GameOff.dll
+/Users/ashwin/Source/Godot/cricards/.godot/mono/temp/obj/Debug/GameOff.pdb

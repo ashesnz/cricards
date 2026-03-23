@@ -4,7 +4,7 @@ public partial class TurnAnnouncer : Label
 {
     public float TotalDuration = 2.0f;
 
-    private Tween _tween;
+    private Tween? _tween;
     private Vector2 _original_position;
 
     public override void _Ready()
@@ -32,16 +32,17 @@ public partial class TurnAnnouncer : Label
         _tween.SetTrans(Tween.TransitionType.Expo);
         _tween.SetEase(Tween.EaseType.Out);
         _tween.SetParallel(true);
-        _tween.TweenProperty(this, "scale:y", 1.0f, duration * 2 / 5);
-        _tween.TweenProperty(this, "position:x", Position.X - offset, duration / 3);
+        // Tween scale.Y by tweening the Vector2 scale property
+        _tween.TweenProperty(this, "scale", new Vector2(Scale.X, 1.0f), duration * 2 / 5);
+        _tween.TweenProperty(this, "position", new Vector2(Position.X - offset, Position.Y), duration / 3);
 
         _tween.SetParallel(false);
         _tween.TweenInterval(duration / 3);
 
         _tween.SetEase(Tween.EaseType.In);
         _tween.SetParallel(true);
-        _tween.TweenProperty(this, "scale:y", 0.0f, duration * 2 / 5);
-        _tween.TweenProperty(this, "position:x", Position.X - 2 * offset, duration / 3);
+        _tween.TweenProperty(this, "scale", new Vector2(Scale.X, 0.0f), duration * 2 / 5);
+        _tween.TweenProperty(this, "position", new Vector2(Position.X - 2 * offset, Position.Y), duration / 3);
 
         // Hide after the tween finishes
         _tween.Finished += () => { Visible = false; };

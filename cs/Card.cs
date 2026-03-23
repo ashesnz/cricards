@@ -4,8 +4,9 @@ using System;
 [Tool]
 public partial class Card : Control
 {
-	[Signal] public delegate void MouseEnteredEventHandler(Card card);
-	[Signal] public delegate void MouseExitedEventHandler(Card card);
+	// Custom signals carrying this Card instance. Named to avoid colliding with Control.MouseEntered/MouseExited.
+	[Signal] public delegate void CardMouseEnteredEventHandler(Card card);
+	[Signal] public delegate void CardMouseExitedEventHandler(Card card);
 
 	public enum Colour { RED, BLUE, GREEN, PURPLE }
 
@@ -47,9 +48,9 @@ public partial class Card : Control
 		// can size slots sensibly.
 		UpdateRectMinSizeFromSprite();
 
-		// Use Control's mouse_entered/mouse_exited signals for hover detection
-		this.MouseEntered += _on_area_2d_mouse_entered;
-		this.MouseExited += _on_area_2d_mouse_exited;
+		// Wire Control's parameterless MouseEntered/MouseExited to our custom signals
+		this.MouseEntered += () => { EmitSignal("CardMouseEntered", this); };
+		this.MouseExited += () => { EmitSignal("CardMouseExited", this); };
 	}
 
 	public override void _Process(double delta)
@@ -184,25 +185,21 @@ public partial class Card : Control
 		}
 	}
 
-	private void _on_area_2d_mouse_entered()
-	{
-		EmitSignal(SignalName.MouseEntered, this);
-	}
+	// (Removed old handlers; we now emit CardMouseEntered/CardMouseExited above.)
 
-	private void _on_area_2d_mouse_exited()
-	{
-		EmitSignal(SignalName.MouseExited, this);
-	}
+	// Public property exposing the computed minimum visual size for layout.
+	private Vector2 _minSize = Vector2.Zero;
+	public Vector2 MinSize => _minSize;
 
 	private void UpdateRectMinSizeFromSprite()
 	{
 		if (card_sprite != null && card_sprite.Texture != null)
 		{
 			Vector2 texSize = card_sprite.Texture.GetSize();
-			Vector2 scale = card_sprite.RectScale != Vector2.Zero ? card_sprite.RectScale : this.RectScale;
-			this.RectMinSize = texSize * scale;
-			_original_scale = this.RectScale;
-			_original_position = this.RectPosition;
+			Vector2 scale = card_sprite.Scale != Vector2.Zero ? card_sprite.Scale : this.Scale;
+			_minSize = texSize * scale;
+			_original_scale = this.Scale;
+			_original_position = this.Position;
 		}
 	}
 }

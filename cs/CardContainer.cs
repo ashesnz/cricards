@@ -23,10 +23,10 @@ public partial class CardContainer : Container
 				if (PlayableCard != null)
 				{
 					AddChild(PlayableCard);
-					PlayableCard.RectPosition = CARD_COMPONENT_POSITION;
+								PlayableCard.Position = CARD_COMPONENT_POSITION;
 					if (_card != null)
 						PlayableCard.LoadCardData(_card);
-					PlayableCard.RectScale = Vector2.One * SCALE;
+								PlayableCard.Scale = Vector2.One * SCALE;
 				}
 			}
 		}

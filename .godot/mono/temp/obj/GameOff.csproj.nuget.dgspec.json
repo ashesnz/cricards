@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/ashwin/Source/Godot/game-off-2024/GameOff.csproj": {}
+    "/Users/ashwin/Source/Godot/cricards/GameOff.csproj": {}
   },
   "projects": {
-    "/Users/ashwin/Source/Godot/game-off-2024/GameOff.csproj": {
+    "/Users/ashwin/Source/Godot/cricards/GameOff.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/ashwin/Source/Godot/game-off-2024/GameOff.csproj",
+        "projectUniqueName": "/Users/ashwin/Source/Godot/cricards/GameOff.csproj",
         "projectName": "GameOff",
-        "projectPath": "/Users/ashwin/Source/Godot/game-off-2024/GameOff.csproj",
+        "projectPath": "/Users/ashwin/Source/Godot/cricards/GameOff.csproj",
         "packagesPath": "/Users/ashwin/.nuget/packages/",
-        "outputPath": "/Users/ashwin/Source/Godot/game-off-2024/.godot/mono/temp/obj/",
+        "outputPath": "/Users/ashwin/Source/Godot/cricards/.godot/mono/temp/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/ashwin/.nuget/NuGet/NuGet.Config"

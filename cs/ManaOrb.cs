@@ -3,15 +3,15 @@ using Godot;
 public partial class ManaOrb : Sprite2D
 {
     private Vector2 _original_position;
-    private Tween _fill_up_tween;
-    private Tween _spend_tween;
-    private Tween _empty_tween;
+    private Tween? _fill_up_tween;
+    private Tween? _spend_tween;
+    private Tween? _empty_tween;
 
-    private Label label;
-    private Sprite2D mana_orb;
+    private Label? label;
+    private Sprite2D? mana_orb;
 
     // Expose the Label for external access (e.g., Main) safely
-    public Label Label => label;
+    public Label? Label => label;
 
     public override void _Ready()
     {

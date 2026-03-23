@@ -57,6 +57,13 @@ public partial class Main : Node2D
         if (hand != null)
         {
             GD.Print($"[MAIN DEBUG] hand resolved: path={hand.GetPath()} parent={hand.GetParent()?.Name} hand.GlobalPosition={hand.GlobalPosition}");
+            // Enable hand debug logging so RepositionCards prints diagnostic info.
+            try
+            {
+                hand.debug_log_spacing = true;
+                GD.Print("[MAIN DEBUG] Enabled Hand.debug_log_spacing for diagnostics.");
+            }
+            catch { }
         }
         else
         {
@@ -535,7 +542,7 @@ public partial class Main : Node2D
         if (card_with_id.Card != null)
             playable_card.LoadCardData(card_with_id.Card);
         playable_card.id = card_with_id.Id;
-        try { playable_card.RectGlobalPosition = hand.RectGlobalPosition; } catch { playable_card.RectPosition = Vector2.Zero; }
+        try { playable_card.GlobalPosition = hand.GlobalPosition; } catch { playable_card.Position = Vector2.Zero; }
         RemoveChild(playable_card);
         hand.AddCard(playable_card);
 
@@ -567,7 +574,7 @@ public partial class Main : Node2D
             if (card_with_id.Card != null)
                 playable_card.LoadCardData(card_with_id.Card);
             playable_card.id = card_with_id.Id;
-            try { playable_card.RectGlobalPosition = hand.RectGlobalPosition; } catch { playable_card.RectPosition = Vector2.Zero; }
+            try { playable_card.GlobalPosition = hand.GlobalPosition; } catch { playable_card.Position = Vector2.Zero; }
             RemoveChild(playable_card);
             hand.AddCard(playable_card);
             GD.Print($"[MAIN DEBUG] _deal_starting_hand: added playable_card id={playable_card.id}; hand.cards.Count={hand.cards.Count}");
@@ -580,7 +587,7 @@ public partial class Main : Node2D
         // Debug output: viewport and hand/card positions to help track visibility issues
         var rect = GetViewport().GetVisibleRect();
         GD.Print($"[DEBUG] viewport size = {rect.Size}");
-        GD.Print($"[DEBUG] hand global position = {hand.RectGlobalPosition}, hand position = {hand.RectPosition}");
+        GD.Print($"[DEBUG] hand global position = {hand.GlobalPosition}, hand position = {hand.Position}");
         GD.Print($"[DEBUG] hand.cards count = {hand.cards.Count}");
         for (int i = 0; i < hand.cards.Count; i++)
         {
@@ -592,7 +599,7 @@ public partial class Main : Node2D
             var pc = obj as PlayableCard;
             if (pc != null)
             {
-                GD.Print($"[DEBUG] card[{i}] id={pc.id} visible={pc.Visible} global_pos={pc.RectGlobalPosition} pos={pc.RectPosition}");
+                GD.Print($"[DEBUG] card[{i}] id={pc.id} visible={pc.Visible} global_pos={pc.GlobalPosition} pos={pc.Position}");
             }
         }
     }
@@ -621,7 +628,7 @@ public partial class Main : Node2D
 
     private void _on_remove_card_chosen(PlayableCard playable_card)
     {
-        if (playable_card != null)
+        if (playable_card != null && playable_card.card_data != null)
         {
             deck.RemoveCardByData(playable_card.card_data);
             if (view_deck_button != null) { view_deck_button.deck = deck.GetPlayableDeck(); view_deck_button.SetLabelDeckSize(); }
@@ -630,7 +637,7 @@ public partial class Main : Node2D
 
     private void _on_reward_card_chosen(PlayableCard playable_card)
     {
-        if (playable_card != null)
+        if (playable_card != null && playable_card.card_data != null)
         {
             deck.AddCard(playable_card.card_data);
             if (view_deck_button != null) { view_deck_button.deck = deck.GetPlayableDeck(); view_deck_button.SetLabelDeckSize(); }

@@ -7,29 +7,30 @@ public partial class RewardChooseACard : MarginContainer
 
     [Export] public Array normal_possible_rewards = new Array(); // CardData
     [Export] public Array secret_possible_rewards = new Array(); // CardData
-    [Export] public CardData test_card_data;
+    [Export] public CardData? test_card_data;
 
     private Array _reward_card_containers = new Array(); // RewardCardContainer
     private Array _chosen_rewards = new Array();
 
-    private HBoxContainer h_box_container;
-    private RewardCardContainer reward_card_container_1;
-    private RewardCardContainer reward_card_container_2;
-    private RewardCardContainer reward_card_container_3;
-    private Button skip_button;
+    private HBoxContainer? h_box_container;
+    private RewardCardContainer? reward_card_container_1;
+    private RewardCardContainer? reward_card_container_2;
+    private RewardCardContainer? reward_card_container_3;
+    private Button? skip_button;
 
     public override void _Ready()
     {
         skip_button = GetNodeOrNull<Button>("VBoxContainer/SkipButton");
-        skip_button.Pressed += () => _OnChosen(null);
+        if (skip_button != null)
+            skip_button.Pressed += () => _OnChosen(null);
 
         reward_card_container_1 = GetNodeOrNull<RewardCardContainer>("VBoxContainer/HBoxContainer/RewardCardContainer1");
         reward_card_container_2 = GetNodeOrNull<RewardCardContainer>("VBoxContainer/HBoxContainer/RewardCardContainer2");
         reward_card_container_3 = GetNodeOrNull<RewardCardContainer>("VBoxContainer/HBoxContainer/RewardCardContainer3");
 
-        _reward_card_containers.Add(reward_card_container_1);
-        _reward_card_containers.Add(reward_card_container_2);
-        _reward_card_containers.Add(reward_card_container_3);
+        if (reward_card_container_1 != null) _reward_card_containers.Add(reward_card_container_1);
+        if (reward_card_container_2 != null) _reward_card_containers.Add(reward_card_container_2);
+        if (reward_card_container_3 != null) _reward_card_containers.Add(reward_card_container_3);
     }
 
     public void Activate(bool is_revealed_secret)
@@ -41,7 +42,7 @@ public partial class RewardChooseACard : MarginContainer
             var container = obj as RewardCardContainer;
             if (container == null) continue;
             var reward = _GetReward(is_revealed_secret);
-            if (reward != null)
+            if (reward != null && container.PlayableCard != null)
                 container.PlayableCard.LoadCardData(reward);
             container.Chosen += _OnChosen;
         }

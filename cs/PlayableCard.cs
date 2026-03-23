@@ -22,8 +22,9 @@ public partial class PlayableCard : Control
         card = GetNodeOrNull<Card>("Card");
         if (card != null)
         {
-            card.MouseEntered += _on_card_mouse_entered;
-            card.MouseExited += _on_card_mouse_exited;
+            // Listen to Card's emitted enter/exit signals and re-emit as PlayableCard signals
+            try { card.CardMouseEntered += _on_card_mouse_entered; } catch { }
+            try { card.CardMouseExited += _on_card_mouse_exited; } catch { }
         }
     }
 
@@ -60,5 +61,8 @@ public partial class PlayableCard : Control
     {
         EmitSignal(SignalName.MouseExited, this);
     }
+
+    // Expose the visual minimum size of this playable card to layout code
+    public Vector2 MinSize => card != null ? card.MinSize : Vector2.Zero;
 }
 

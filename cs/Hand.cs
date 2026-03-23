@@ -59,6 +59,11 @@ public partial class Hand : Control
     private Dictionary<PlayableCard, Control> _slots = new();
     [Export] public int separation_override = -1;
 
+    // Cached baseline positions/rotations computed by RepositionCards so
+    // hover handlers can lift cards relative to their baseline.
+    private Dictionary<PlayableCard, Vector2> _baselinePositions = new();
+    private Dictionary<PlayableCard, float> _baselineRotations = new();
+
     // The selected card is the hovered card with the highest index — pure derived state.
     private int SelectedCardIndex =>
         _hoveredCards.Count == 0
@@ -99,11 +104,11 @@ public partial class Hand : Control
         cards.Add(card);
 
         // Create a slot to host the card so the HBoxContainer controls
-        // horizontal layout while we can animate the card's rect_position
+        // horizontal layout while we can animate the card's position
         // to implement hover lift.
         var slot = new Control();
         // Give the slot a minimal size so the HBoxContainer can size it.
-        try { slot.RectMinSize = card.RectMinSize; } catch { }
+        try { slot.MinSize = card.MinSize; } catch { }
 
         if (_cardRow != null)
             _cardRow.AddChild(slot);
@@ -111,16 +116,16 @@ public partial class Hand : Control
             AddChild(slot);
 
         slot.AddChild(card);
-        card.RectPosition = Vector2.Zero;
+        card.Position = Vector2.Zero;
         card.Visible = true;
 
-        // Set slot minimum size from the card's RectMinSize (computed by Card)
+        // Set slot minimum size from the card's MinSize (computed by Card)
         try
         {
-            if (card.RectMinSize != Vector2.Zero)
-                slot.RectMinSize = card.RectMinSize;
-            else if (card.Card != null && card.Card.RectMinSize != Vector2.Zero)
-                slot.RectMinSize = card.Card.RectMinSize;
+            if (card.MinSize != Vector2.Zero)
+                slot.MinSize = card.MinSize;
+            else if (card.Card != null && card.Card.MinSize != Vector2.Zero)
+                slot.MinSize = card.Card.MinSize;
         }
         catch { }
 
@@ -146,6 +151,9 @@ public partial class Hand : Control
                 parent.RemoveChild(slot);
             slot.QueueFree();
             _slots.Remove(card);
+            // Remove any baseline cache for this card
+            try { _baselinePositions.Remove(card); } catch { }
+            try { _baselineRotations.Remove(card); } catch { }
         }
 
         CreateTween()
@@ -173,6 +181,9 @@ public partial class Hand : Control
         _slots.Clear();
         cards.Clear();
         _hoveredCards.Clear();
+        // Clear baseline caches
+        _baselinePositions.Clear();
+        _baselineRotations.Clear();
         return removed;
     }
 
@@ -189,7 +200,7 @@ public partial class Hand : Control
         int count = cards.Count;
         if (count == 0)
         {
-            if (_cardRow != null) _cardRow.Separation = 0;
+            // rely on child MinSize for spacing; nothing to position.
             return;
         }
 
@@ -198,7 +209,9 @@ public partial class Hand : Control
         {
             // If inspector override is set, use it; otherwise compute separation.
             if (separation_override >= 0)
-                _cardRow.Separation = separation_override;
+            {
+                // separation_override is ignored; rely on child MinSize for spacing.
+            }
             else
             {
                 // Compute average full width of cards (use Card.RectMinSize if available)
@@ -208,11 +221,11 @@ public partial class Hand : Control
                 {
                     try
                     {
-                        if (c.Card != null && c.Card.RectMinSize != Vector2.Zero)
-                        {
-                            totalWidth += c.Card.RectMinSize.X;
-                            measured++;
-                        }
+                            if (c.Card != null && c.Card.MinSize != Vector2.Zero)
+                            {
+                                totalWidth += c.Card.MinSize.X;
+                                measured++;
+                            }
                     }
                     catch { }
                 }
@@ -224,7 +237,7 @@ public partial class Hand : Control
                 else
                     separation = Mathf.Clamp((int)spacing, 0, 1000);
 
-                _cardRow.Separation = separation;
+                // HBoxContainer.Separation not available in this API; ignore.
 
                 // Ensure slot sizes reflect visual card sizes
                 foreach (var kv in _slots)
@@ -233,11 +246,94 @@ public partial class Hand : Control
                     var slot = kv.Value;
                     try
                     {
-                        if (card.Card != null && card.Card.RectMinSize != Vector2.Zero)
-                            slot.RectMinSize = card.Card.RectMinSize;
+                                if (card.Card != null && card.Card.MinSize != Vector2.Zero)
+                                    slot.MinSize = card.Card.MinSize;
                     }
                     catch { }
                 }
+            }
+        }
+
+        // Compute per-card baseline positions and rotations along the arc
+        float effectiveArcWidth = ComputeEffectiveArcWidth(count);
+        _baselinePositions.Clear();
+        _baselineRotations.Clear();
+
+        // Debug summary for the whole hand placement
+        if (debug_log_spacing)
+        {
+            try
+            {
+                GD.Print($"[HAND DEBUG] RepositionCards: count={count} spacing={spacing} effectiveArcWidth={effectiveArcWidth} arc_height={arc_height} hand_global_pos={GlobalPosition}");
+            }
+            catch { }
+        }
+
+        // mid is used to normalize index to t in [-1, 1]
+        float mid = (count - 1) / 2.0f;
+        for (int i = 0; i < count; i++)
+        {
+            var card = cards[i];
+            if (card == null) continue;
+
+            float t = mid == 0 ? 0.0f : (i - mid) / mid; // -1 .. 1
+
+            Vector2 baseline = ArcPosition(t, effectiveArcWidth);
+            float rot = ArcRotation(t);
+
+            // Store baseline for hover logic and future updates
+            _baselinePositions[card] = baseline;
+            _baselineRotations[card] = rot;
+
+            // Animate the card to its baseline. Use x=0 because HBox/slot
+            // handles horizontal placement; Position.Y controls vertical offset.
+            AnimateCard(card, new Vector2(0, baseline.Y), rot);
+
+            if (debug_log_spacing)
+            {
+                // Gather some diagnostic state about the card and its slot
+                Vector2 slotGlobal = Vector2.Zero;
+                Vector2 slotMin = Vector2.Zero;
+                Vector2 cardGlobal = Vector2.Zero;
+                Vector2 cardMin = Vector2.Zero;
+                bool cardVisible = false;
+                bool hasTexture = false;
+                string textureInfo = "(none)";
+
+                try
+                {
+                    if (_slots.TryGetValue(card, out var slot))
+                    {
+                        slotGlobal = slot.GlobalPosition;
+                        slotMin = slot.MinSize;
+                    }
+                }
+                catch { }
+
+                try
+                {
+                    cardGlobal = card.GlobalPosition;
+                    cardMin = card.MinSize;
+                    cardVisible = card.Visible;
+
+                    if (card.Card != null)
+                    {
+                        var sprite = card.Card.GetNodeOrNull<TextureRect>("CardSprite");
+                            if (sprite != null && sprite.Texture != null)
+                        {
+                            hasTexture = true;
+                            textureInfo = sprite.Texture.ResourcePath ?? sprite.Texture.GetType().Name;
+                        }
+                        else if (card.Card.image != null)
+                        {
+                            hasTexture = true;
+                            textureInfo = card.Card.image.ResourcePath ?? card.Card.image.GetType().Name;
+                        }
+                    }
+                }
+                catch { }
+
+                GD.Print($"[HAND DEBUG] idx={i} t={t:F2} baseline={baseline} rot={rot:F3} slot_global={slotGlobal} slot_min={slotMin} card_global={cardGlobal} card_min={cardMin} visible={cardVisible} hasTexture={hasTexture} tex={textureInfo}");
             }
         }
     }
@@ -261,10 +357,10 @@ public partial class Hand : Control
                 // Prefer using RectMinSize if already computed on the card control
                 try
                 {
-                    if (c.RectMinSize != Vector2.Zero)
-                    {
-                        half = c.RectMinSize.X / 2.0f;
-                    }
+                                if (c.MinSize != Vector2.Zero)
+                                            {
+                                                half = c.MinSize.X / 2.0f;
+                                            }
                     else
                     {
                         var sprite = c.Card?.GetNodeOrNull<TextureRect>("CardSprite");
@@ -272,16 +368,16 @@ public partial class Hand : Control
                         {
                             var tex = sprite.Texture;
                             Vector2 texSize = tex.GetSize();
-                            float scaleX = sprite.RectScale.X != 0 ? sprite.RectScale.X : (c.Card.RectScale.X != 0 ? c.Card.RectScale.X : 1.0f);
-                            scaleX *= c.RectScale.X != 0 ? c.RectScale.X : 1.0f;
+                            float scaleX = sprite.Scale.X != 0 ? sprite.Scale.X : (c.Card.Scale.X != 0 ? c.Card.Scale.X : 1.0f);
+                            scaleX *= c.Scale.X != 0 ? c.Scale.X : 1.0f;
                             half = (texSize.X * scaleX) / 2.0f;
                         }
                         else if (c.Card.image != null)
                         {
                             var tex = c.Card.image;
                             Vector2 texSize = tex.GetSize();
-                            float scaleX = c.Card.RectScale.X != 0 ? c.Card.RectScale.X : 1.0f;
-                            scaleX *= c.RectScale.X != 0 ? c.RectScale.X : 1.0f;
+                            float scaleX = c.Card.Scale.X != 0 ? c.Card.Scale.X : 1.0f;
+                            scaleX *= c.Scale.X != 0 ? c.Scale.X : 1.0f;
                             half = (texSize.X * scaleX) / 2.0f;
                         }
                     }
@@ -343,9 +439,9 @@ public partial class Hand : Control
                 // Prefer RectMinSize computed on the Card control
                 try
                 {
-                    if (c.Card.RectMinSize != Vector2.Zero)
+                    if (c.Card.MinSize != Vector2.Zero)
                     {
-                        half = c.Card.RectMinSize.X / 2.0f;
+                        half = c.Card.MinSize.X / 2.0f;
                     }
                     else
                     {
@@ -354,17 +450,17 @@ public partial class Hand : Control
                         {
                             var tex = sprite.Texture;
                             Vector2 texSize = tex.GetSize();
-                            float scaleX = sprite.RectScale.X != 0 ? sprite.RectScale.X : (c.Card.RectScale.X != 0 ? c.Card.RectScale.X : 1.0f);
-                            // Also include PlayableCard's own rect scale if present
-                            scaleX *= c.RectScale.X != 0 ? c.RectScale.X : 1.0f;
+                            float scaleX = sprite.Scale.X != 0 ? sprite.Scale.X : (c.Card.Scale.X != 0 ? c.Card.Scale.X : 1.0f);
+                            // Also include PlayableCard's own scale if present
+                            scaleX *= c.Scale.X != 0 ? c.Scale.X : 1.0f;
                             half = (texSize.X * scaleX) / 2.0f;
                         }
                         else if (c.Card.image != null)
                         {
                             var tex = c.Card.image;
                             Vector2 texSize = tex.GetSize();
-                            float scaleX = c.Card.RectScale.X != 0 ? c.Card.RectScale.X : 1.0f;
-                            scaleX *= c.RectScale.X != 0 ? c.RectScale.X : 1.0f;
+                            float scaleX = c.Card.Scale.X != 0 ? c.Card.Scale.X : 1.0f;
+                            scaleX *= c.Scale.X != 0 ? c.Scale.X : 1.0f;
                             half = (texSize.X * scaleX) / 2.0f;
                         }
                     }
@@ -405,7 +501,7 @@ public partial class Hand : Control
     {
         // Animate the PlayableCard control's rect_position (local to its parent slot/HBox)
         var tween = CreateTween().SetParallel();
-        tween.TweenProperty(card, "rect_position", targetPos, 0.15f)
+        tween.TweenProperty(card, "position", targetPos, 0.15f)
              .SetTrans(Tween.TransitionType.Quad)
              .SetEase(Tween.EaseType.Out);
         tween.TweenProperty(card, "rotation", targetRot, 0.15f)
@@ -421,8 +517,13 @@ public partial class Hand : Control
         int i = cards.IndexOf(card);
         if (i < 0) return;
 
-        // Lift the card relative to its current rect_position
-        AnimateCard(card, new Vector2(0, -hover_lift), 0.0f);
+        // Lift relative to the computed baseline if available.
+        Vector2 baseline = Vector2.Zero;
+        float baselineRot = 0.0f;
+        try { if (_baselinePositions.TryGetValue(card, out var b)) baseline = b; } catch { }
+        try { if (_baselineRotations.TryGetValue(card, out var r)) baselineRot = r; } catch { }
+
+        AnimateCard(card, new Vector2(0, baseline.Y - hover_lift), baselineRot);
     }
 
     private void OnCardUnhovered(PlayableCard card)
@@ -431,7 +532,13 @@ public partial class Hand : Control
         int i = cards.IndexOf(card);
         if (i < 0) return;
 
-        AnimateCard(card, Vector2.Zero, 0.0f);
+        // Return to baseline if we have it, otherwise zero
+        Vector2 baseline = Vector2.Zero;
+        float baselineRot = 0.0f;
+        try { if (_baselinePositions.TryGetValue(card, out var b)) baseline = b; } catch { }
+        try { if (_baselineRotations.TryGetValue(card, out var r)) baselineRot = r; } catch { }
+
+        AnimateCard(card, new Vector2(0, baseline.Y), baselineRot);
     }
 
     public override void _Process(double delta)

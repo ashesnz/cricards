@@ -5,8 +5,8 @@ using Godot.Collections;
 [Tool]
 public partial class SecrecyBar : ProgressBar
 {
-	private AudioStreamPlayer secret_full_sfx;
-	private AudioStreamPlayer secret_update_sfx;
+	private AudioStreamPlayer? secret_full_sfx;
+	private AudioStreamPlayer? secret_update_sfx;
 
 	public override void _Ready()
 	{

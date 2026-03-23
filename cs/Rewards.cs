@@ -7,10 +7,10 @@ public partial class Rewards : Control
 
 	public int num_rewards = 1;
 
-	private RewardChooseACard reward_choose_a_card;
-	private TextureRect rewards_panel;
-	private Button choose_a_card_button;
-	private Button choose_a_secret_button;
+	private RewardChooseACard? reward_choose_a_card;
+	private TextureRect? rewards_panel;
+	private Button? choose_a_card_button;
+	private Button? choose_a_secret_button;
 
 	public override void _Ready()
 	{
