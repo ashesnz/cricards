@@ -62,7 +62,7 @@ public partial class Rewards : Control
 
 	private void _OnChosen(PlayableCard playable_card)
 	{
-		EmitSignal(SignalName.Chosen, playable_card);
+		EmitSignal(SignalName.Chosen, (GodotObject)playable_card);
 		if (rewards_panel != null) rewards_panel.Visible = true;
 	}
 }

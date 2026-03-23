@@ -3,18 +3,18 @@ using Godot.Collections;
 
 public partial class ChoiceRemoveCards : Control
 {
-    [Signal] public delegate void ChosenEventHandler(PlayableCard playable_card);
+    [Signal] public delegate void ChosenEventHandler(PlayableCard? playable_card);
 
     [Export] public CardData? test_card_data;
 
     private Array _card_containers = new Array(); // RewardCardContainer
-    private CardData _chosen_card;
+    private CardData? _chosen_card;
 
-    private HBoxContainer h_box_container;
-    private RewardCardContainer remove_card_container_1;
-    private RewardCardContainer remove_card_container_2;
-    private RewardCardContainer remove_card_container_3;
-    private Button skip_button;
+    private HBoxContainer? h_box_container;
+    private RewardCardContainer? remove_card_container_1;
+    private RewardCardContainer? remove_card_container_2;
+    private RewardCardContainer? remove_card_container_3;
+    private Button? skip_button;
 
     public override void _Ready()
     {
@@ -26,9 +26,9 @@ public partial class ChoiceRemoveCards : Control
         remove_card_container_2 = GetNodeOrNull<RewardCardContainer>("RewardCardContainer2");
         remove_card_container_3 = GetNodeOrNull<RewardCardContainer>("RewardCardContainer3");
 
-        _card_containers.Add(remove_card_container_1);
-        _card_containers.Add(remove_card_container_2);
-        _card_containers.Add(remove_card_container_3);
+        if (remove_card_container_1 != null) _card_containers.Add(remove_card_container_1);
+        if (remove_card_container_2 != null) _card_containers.Add(remove_card_container_2);
+        if (remove_card_container_3 != null) _card_containers.Add(remove_card_container_3);
     }
 
     public void Activate(Deck deck)
@@ -47,14 +47,14 @@ public partial class ChoiceRemoveCards : Control
         }
     }
 
-    private void _OnChosen(PlayableCard playable_card)
+    private void _OnChosen(PlayableCard? playable_card)
     {
-        if (playable_card != null)
+        if (playable_card != null && playable_card.card_data != null)
             GD.Print("emitting: " + playable_card.card_data.Title);
         else
             GD.Print("emitting null");
 
-        EmitSignal(SignalName.Chosen, playable_card);
+        EmitSignal(SignalName.Chosen, (object)playable_card);
         Visible = false;
     }
 }

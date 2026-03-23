@@ -6,13 +6,13 @@ public partial class Map : Control
 {
     [Signal] public delegate void ChosenEventHandler(Encounter encounter);
 
-    [Export] public PackedScene dotted_line_scene;
+    [Export] public PackedScene? dotted_line_scene;
 
-    private Button back_button;
-    private Encounter ice_cream_isaac;
-    private Encounter muffin_max;
-    private Encounter donut_daisy;
-    private Label ascension_label;
+    private Button? back_button;
+    private Encounter? ice_cream_isaac;
+    private Encounter? muffin_max;
+    private Encounter? donut_daisy;
+    private Label? ascension_label;
 
     public override void _Ready()
     {
@@ -106,7 +106,7 @@ public partial class Map : Control
 
     private void _OnEncounterPressed(Encounter encounter)
     {
-        EmitSignal(SignalName.Chosen, encounter);
+        EmitSignal(SignalName.Chosen, (object)encounter);
     }
 
     public Array GetAllEncounters()
@@ -178,7 +178,8 @@ public partial class Map : Control
                 if (!drawn_pairs.ContainsKey(pair))
                 {
                     var points = _GenerateTrailPoints(pos1, pos2, 10);
-                    var line2DInst = dotted_line_scene.Instantiate();
+                                if (dotted_line_scene == null) continue;
+                                var line2DInst = dotted_line_scene.Instantiate();
                     var line2D = line2DInst as Node2D;
                     if (line2D != null)
                     {

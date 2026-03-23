@@ -50,7 +50,7 @@ public partial class RewardChooseACard : MarginContainer
 
     private void _OnChosen(PlayableCard playable_card)
     {
-        EmitSignal(SignalName.Chosen, playable_card);
+        EmitSignal(SignalName.Chosen, (object)playable_card);
         Visible = false;
     }
 

@@ -5,13 +5,13 @@ public partial class DeckViewControl : Control
     public enum Type { DRAW_PILE, DISCARD_PILE, DECK }
     public Type current_type;
 
-    private DeckViewWindow deck_view_window;
-    private Button back_button;
-    private Label title_label;
-    private Label description_label;
+    private DeckViewWindow? deck_view_window;
+    private Button? back_button;
+    private Label? title_label;
+    private Label? description_label;
 
     // Expose the DeckViewWindow instance for external callers (Main) to display lists
-    public DeckViewWindow DeckViewWindow => deck_view_window;
+    public DeckViewWindow? DeckViewWindow => deck_view_window;
 
     public override void _Ready()
     {
@@ -81,14 +81,14 @@ public partial class DeckViewControl : Control
     {
         switch (type)
         {
-            case Type.DRAW_PILE:
-                title_label.Text = "Draw Pile";
+                case Type.DRAW_PILE:
+                if (title_label != null) title_label.Text = "Draw Pile";
                 break;
             case Type.DISCARD_PILE:
-                title_label.Text = "Discard Pile";
+                if (title_label != null) title_label.Text = "Discard Pile";
                 break;
             case Type.DECK:
-                title_label.Text = "The Deck";
+                if (title_label != null) title_label.Text = "The Deck";
                 break;
         }
     }
@@ -97,14 +97,14 @@ public partial class DeckViewControl : Control
     {
         switch (type)
         {
-            case Type.DRAW_PILE:
-                description_label.Text = "Cards are drawn from here at the start of each turn.";
+                case Type.DRAW_PILE:
+                if (description_label != null) description_label.Text = "Cards are drawn from here at the start of each turn.";
                 break;
             case Type.DISCARD_PILE:
-                description_label.Text = "Cards shuffled into your empty draw pile.";
+                if (description_label != null) description_label.Text = "Cards shuffled into your empty draw pile.";
                 break;
             case Type.DECK:
-                description_label.Text = "Cards you start with, each encounter.";
+                if (description_label != null) description_label.Text = "Cards you start with, each encounter.";
                 break;
         }
     }

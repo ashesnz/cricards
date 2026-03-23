@@ -11,7 +11,7 @@ public partial class CardContainer : Container
 	public PlayableCard? PlayableCard { get; private set; }
 
 	private CardData? _card;
-	public CardData card
+	public CardData? card
 	{
 		get => _card;
 		set

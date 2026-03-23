@@ -123,8 +123,10 @@ public partial class Deck : Resource
         }
     }
 
-    private int _generate_card_id(CardData card)
+    private int _generate_card_id(CardData? card)
     {
+        // Accept nullable CardData to avoid nullable warnings at call sites;
+        // generate an id regardless of card being null.
         _id_counter += 1;
         return _id_counter;
     }

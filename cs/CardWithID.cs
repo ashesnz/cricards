@@ -6,7 +6,7 @@ public partial class CardWithID : Resource
     [Export] public CardData? Card { get; set; }
 
     public CardWithID() { }
-    public CardWithID(int id, CardData card)
+    public CardWithID(int id, CardData? card)
     {
         Id = id;
         Card = card;

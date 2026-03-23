@@ -67,7 +67,7 @@ public partial class Card : Control
 		_SetType(temp_type);
 		if (temp_image != null)
 			_SetImage(temp_image);
-		else if (card_data != null)
+		else if (card_data != null && card_data.Image != null)
 			_SetImage(card_data.Image);
 
 		_original_scale = Scale;

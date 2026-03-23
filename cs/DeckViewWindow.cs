@@ -34,11 +34,12 @@ public partial class DeckViewWindow : Control
 
         while (cached_card_containers.Count < cardsWithID.Count)
         {
+            if (card_container_scene == null) break;
             var inst = card_container_scene.Instantiate();
             // Instantiate can return a Node boxed as object/Variant; ensure we get Node first
             var node = inst as Node;
             var cc = node as CardContainer;
-            cached_card_containers.Add(cc);
+            if (cc != null) cached_card_containers.Add(cc);
         }
 
         for (int i = 0; i < cardsWithID.Count; i++)
@@ -47,9 +48,9 @@ public partial class DeckViewWindow : Control
             var cardWithID = elem as CardWithID;
             object cachedObj = cached_card_containers[i];
             var card_container = cachedObj as CardContainer;
-            if (card_container != null && cardWithID != null)
+            if (card_container != null && cardWithID != null && h_flow_container != null)
             {
-                        h_flow_container.AddChild(card_container);
+                h_flow_container.AddChild(card_container);
                 card_container.card = cardWithID.Card;
             }
         }

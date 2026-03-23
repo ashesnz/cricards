@@ -22,7 +22,7 @@ public partial class RewardCardContainer : Control
     public override void _Input(InputEvent @event)
     {
         if (@event.IsActionPressed("mouse_click") && mouse_over && playable_card != null)
-            EmitSignal(SignalName.Chosen, playable_card);
+            EmitSignal(SignalName.Chosen, (GodotObject)playable_card);
     }
 
     private void _OnMouseEntered(PlayableCard pc)

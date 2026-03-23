@@ -20,7 +20,7 @@ public partial class Main : Node2D
     [Export] public CardData? false_lead_card_data;
 
     [Export] public float turn_delay = 2.0f;
-    [Export] public PackedScene playable_card_scene;
+    [Export] public PackedScene? playable_card_scene;
 
     public bool debug_mode = true;
 
@@ -312,7 +312,12 @@ public partial class Main : Node2D
         var card_cost = playable_card.GetCost();
         if (player_character != null && card_cost > player_character.mana) return;
 
-        var game_state = new Godot.Collections.Dictionary { ["actor"] = player_character, ["targets"] = new Godot.Collections.Array { enemy_character }, ["cost"] = card_cost };
+        var game_state = new Godot.Collections.Dictionary();
+        if (player_character != null) game_state["actor"] = player_character;
+        var targetsArr = new Godot.Collections.Array();
+        if (enemy_character != null) targetsArr.Add(enemy_character);
+        game_state["targets"] = targetsArr;
+        game_state["cost"] = card_cost;
         playable_card.Activate(game_state);
         _check_if_card_won_the_game();
 
@@ -378,7 +383,7 @@ public partial class Main : Node2D
         }
 
         player_character?.SpendMana(card_cost);
-        if (mana_orb != null && player_character != null) mana_orb.Label.Text = player_character.mana.ToString();
+        if (mana_orb != null && player_character != null && mana_orb.Label != null) mana_orb.Label.Text = player_character.mana.ToString();
         if (player_character != null && player_character.mana > 0) mana_orb?.SpendAnimation(); else mana_orb?.EmptyAnimation();
 
         hand.RemoveByEntity(playable_card);
@@ -536,7 +541,17 @@ public partial class Main : Node2D
         }
 
         draw_pile.SetLabelDeckSize();
+        if (playable_card_scene == null)
+        {
+            GD.PrintErr("playable_card_scene is null; cannot instantiate playable card.");
+            return;
+        }
         var playable_card = playable_card_scene.Instantiate() as PlayableCard;
+        if (playable_card == null)
+        {
+            GD.PrintErr("playable_card_scene.Instantiate() returned null in _draw_card_to_hand");
+            return;
+        }
         AddChild(playable_card);
         playable_card.Visible = false;
         if (card_with_id.Card != null)
@@ -626,7 +641,7 @@ public partial class Main : Node2D
         _restart_game();
     }
 
-    private void _on_remove_card_chosen(PlayableCard playable_card)
+    private void _on_remove_card_chosen(PlayableCard? playable_card)
     {
         if (playable_card != null && playable_card.card_data != null)
         {
@@ -635,7 +650,7 @@ public partial class Main : Node2D
         }
     }
 
-    private void _on_reward_card_chosen(PlayableCard playable_card)
+    private void _on_reward_card_chosen(PlayableCard? playable_card)
     {
         if (playable_card != null && playable_card.card_data != null)
         {
@@ -648,7 +663,7 @@ public partial class Main : Node2D
 
         if (rewards != null) rewards.Visible = false;
         map?.ReturnToMap();
-        if (secrecy_bar != null && secrecy_bar.IsSecretRevealed()) map?.Disable(enemy_character);
+        if (secrecy_bar != null && secrecy_bar.IsSecretRevealed() && enemy_character != null) map?.Disable(enemy_character);
         if (map != null)
         {
             var mb2 = map.GetNodeOrNull<Button>("BackButton");
