@@ -4,15 +4,15 @@ using Godot.Collections;
 
 public partial class PlayableCard : Control
 {
-    [Signal] public delegate void MouseEnteredEventHandler(PlayableCard card);
-    [Signal] public delegate void MouseExitedEventHandler(PlayableCard card);
+    [Signal] public delegate void PlayableCardMouseEnteredEventHandler(PlayableCard card);
+    [Signal] public delegate void PlayableCardMouseExitedEventHandler(PlayableCard card);
 
     public Array actions = new Array();
     public int id = -1;
     public CardData? card_data;
     public bool exhausted = false;
 
-    private Card card;
+    private Card? card;
 
     // Provide read-only access to the underlying Card node for other systems
     public Card? Card => card;
@@ -54,12 +54,12 @@ public partial class PlayableCard : Control
 
     private void _on_card_mouse_entered(Card c)
     {
-        EmitSignal(SignalName.MouseEntered, this);
+        EmitSignal("PlayableCardMouseEntered", this);
     }
 
     private void _on_card_mouse_exited(Card c)
     {
-        EmitSignal(SignalName.MouseExited, this);
+        EmitSignal("PlayableCardMouseExited", this);
     }
 
     // Expose the visual minimum size of this playable card to layout code

@@ -20,3 +20,7 @@
 /Users/ashwin/Source/Godot/cricards/.godot/mono/temp/obj/Debug/GameOff.dll
 /Users/ashwin/Source/Godot/cricards/.godot/mono/temp/obj/Debug/refint/GameOff.dll
 /Users/ashwin/Source/Godot/cricards/.godot/mono/temp/obj/Debug/GameOff.pdb
+/Users/ashwin/Source/Godot/cricards/.godot/mono/temp/bin/Debug/GameOff.deps.json
+/Users/ashwin/Source/Godot/cricards/.godot/mono/temp/bin/Debug/GameOff.dll
+/Users/ashwin/Source/Godot/cricards/.godot/mono/temp/bin/Debug/GameOff.pdb
+/Users/ashwin/Source/Godot/cricards/.godot/mono/temp/obj/Debug/ref/GameOff.dll

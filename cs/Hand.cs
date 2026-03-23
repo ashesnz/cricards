@@ -108,7 +108,7 @@ public partial class Hand : Control
         // to implement hover lift.
         var slot = new Control();
         // Give the slot a minimal size so the HBoxContainer can size it.
-        try { slot.MinSize = card.MinSize; } catch { }
+        try { slot.CustomMinimumSize = card.MinSize; } catch { }
 
         if (_cardRow != null)
             _cardRow.AddChild(slot);
@@ -123,16 +123,17 @@ public partial class Hand : Control
         try
         {
             if (card.MinSize != Vector2.Zero)
-                slot.MinSize = card.MinSize;
+                slot.CustomMinimumSize = card.MinSize;
             else if (card.Card != null && card.Card.MinSize != Vector2.Zero)
-                slot.MinSize = card.Card.MinSize;
+                slot.CustomMinimumSize = card.Card.MinSize;
         }
         catch { }
 
         _slots[card] = slot;
 
-        card.MouseEntered += _ => OnCardHovered(card);
-        card.MouseExited  += _ => OnCardUnhovered(card);
+        // Attach to PlayableCard's custom signals emitted by its inner Card
+        card.PlayableCardMouseEntered += _ => OnCardHovered(card);
+        card.PlayableCardMouseExited  += _ => OnCardUnhovered(card);
 
         RepositionCards();
     }
@@ -247,7 +248,7 @@ public partial class Hand : Control
                     try
                     {
                                 if (card.Card != null && card.Card.MinSize != Vector2.Zero)
-                                    slot.MinSize = card.Card.MinSize;
+                                    slot.CustomMinimumSize = card.Card.MinSize;
                     }
                     catch { }
                 }
@@ -305,7 +306,7 @@ public partial class Hand : Control
                     if (_slots.TryGetValue(card, out var slot))
                     {
                         slotGlobal = slot.GlobalPosition;
-                        slotMin = slot.MinSize;
+                        slotMin = slot.CustomMinimumSize;
                     }
                 }
                 catch { }

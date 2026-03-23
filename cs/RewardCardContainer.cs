@@ -14,8 +14,8 @@ public partial class RewardCardContainer : Control
         playable_card = GetNodeOrNull<PlayableCard>("PlayableCard");
         if (playable_card != null)
         {
-            playable_card.MouseEntered += _OnMouseEntered;
-            playable_card.MouseExited += _OnMouseExited;
+            playable_card.PlayableCardMouseEntered += _OnMouseEntered;
+            playable_card.PlayableCardMouseExited += _OnMouseExited;
         }
     }
 

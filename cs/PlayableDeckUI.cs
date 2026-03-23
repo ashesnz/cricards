@@ -10,7 +10,7 @@ public partial class PlayableDeckUI : TextureButton
         label = GetNodeOrNull<Label>("Label");
     }
 
-    public CardWithID? Draw()
+    public new CardWithID? Draw()
     {
         SetLabelDeckSize();
         GD.Print($"[PLAYABLE_DECK_UI DEBUG] Draw called: deck.Size()={deck.Size()}");

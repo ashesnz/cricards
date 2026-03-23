@@ -3,10 +3,10 @@ using Godot.Collections;
 
 public partial class DeckViewWindow : Control
 {
-    [Export] public PackedScene card_container_scene;
+    [Export] public PackedScene? card_container_scene;
 
     private Array cached_card_containers = new Array(); // CardContainer
-    private HFlowContainer h_flow_container;
+    private HFlowContainer? h_flow_container;
 
     public override void _Ready()
     {
@@ -15,6 +15,7 @@ public partial class DeckViewWindow : Control
 
     public void ClearDisplay()
     {
+        if (h_flow_container == null) return;
         foreach (object childObj in h_flow_container.GetChildren())
         {
             // GetChildren returns Variants boxed as object; cast to Node first
@@ -48,7 +49,7 @@ public partial class DeckViewWindow : Control
             var card_container = cachedObj as CardContainer;
             if (card_container != null && cardWithID != null)
             {
-                h_flow_container.AddChild(card_container);
+                        h_flow_container.AddChild(card_container);
                 card_container.card = cardWithID.Card;
             }
         }
