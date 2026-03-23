@@ -3,137 +3,90 @@ using System.Collections.Generic;
 using System.Linq;
 
 [Tool]
-public partial class Hand : Control
+public partial class Hand : Node2D
 {
     [Signal] public delegate void CardActivatedEventHandler(PlayableCard card);
 
-    // How far cards spread horizontally from the centre of the hand.
-    // Increased a bit to spread cards out more by default.
-    [Export] public float arc_width = 520.0f;
+    /// <summary>Radius of the imaginary circle the cards are placed on.</summary>
+    [Export] public float hand_radius = 1000.0f;
 
-    // Minimum desired horizontal gap (in pixels) between adjacent card centres.
-    // The hand will increase its effective arc width to ensure at least this gap
-    // between cards when necessary.
-    [Export] public float min_card_gap = 360.0f;
-    
-    // Multiplier applied to the effective arc width to allow an easy global
-    // increase in spacing without changing the raw arc_width value.
-    [Export] public float spread_multiplier = 4.0f;
+    /// <summary>Starting angle of the arc (degrees). -90 = straight up.</summary>
+    [Export] public float card_angle = -90.0f;
 
-    // Extra padding (pixels) added between cards beyond their visual halves.
-    [Export] public float min_card_padding = 8.0f;
+    /// <summary>Total spread angle budget (degrees) shared across all cards.</summary>
+    [Export] public float angle_limit = 30.0f;
 
-    // When true, ensure step between card centres is at least the full visual
-    // card width + padding (stronger guarantee against overlap).
-    [Export] public bool force_no_overlap = true;
+    /// <summary>Maximum degrees between adjacent cards.</summary>
+    [Export] public float max_card_spread_angle = 10.0f;
 
-    // Debug / testing: force default spacing values at runtime when true.
-    // Enabled by default to apply stronger spacing immediately for testing.
-    [Export] public bool force_defaults = true;
-    [Export] public float default_force_arc_width = 520.0f;
-    [Export] public float default_force_min_card_gap = 360.0f;
-    [Export] public float default_force_spread_multiplier = 4.0f;
-
-    // When true, prints computed effective arc width & spacing info to the console.
-    [Export] public bool debug_log_spacing = false;
-
-    // Vertical depth of the arc — larger = cards dip down more at the sides.
-    [Export] public float arc_height = 80.0f;
-
-    // How much a hovered card lifts upward (in pixels).
+    /// <summary>How many pixels a hovered card lifts upward.</summary>
     [Export] public float hover_lift = 80.0f;
 
-    // Maximum rotation applied to the outermost cards (degrees).
-    [Export] public float max_rotation_deg = 12.0f;
+    // Public list so Main can iterate cards (e.g. to empty them)
+    public List<PlayableCard> cards { get; } = new List<PlayableCard>();
 
-    // --- Circular / fan layout properties (copied from the GDScript reference)
-    [Export] public float hand_radius = 100.0f;
-    [Export] public float card_angle = -90.0f;
-    [Export] public float angle_limit = 20.0f;
-    [Export] public float max_card_spread_angle = 5.0f;
+    private HashSet<PlayableCard> _hoveredCards = new HashSet<PlayableCard>();
+    private int _currentSelectedCardIndex = -1;
 
-    private HashSet<PlayableCard> _hoveredCards = new();
-    public List<PlayableCard> cards = new();
-
-    private HBoxContainer? _cardRow;
-    private Dictionary<PlayableCard, Control> _slots = new();
-    [Export] public int separation_override = -1;
-
-    // Cached baseline positions/rotations computed by RepositionCards so
-    // hover handlers can lift cards relative to their baseline.
-    private Dictionary<PlayableCard, Vector2> _baselinePositions = new();
-    private Dictionary<PlayableCard, float> _baselineRotations = new();
-
-    // The selected card is the hovered card with the highest index — pure derived state.
-    private int SelectedCardIndex =>
-        _hoveredCards.Count == 0
-            ? -1
-            : _hoveredCards.Max(c => cards.IndexOf(c));
+    // Baseline positions (local to Hand) computed by RepositionCards,
+    // used by hover handlers to lift cards relative to their rest position.
+    private Dictionary<PlayableCard, Vector2> _baselinePositions = new Dictionary<PlayableCard, Vector2>();
+    private Dictionary<PlayableCard, float>   _baselineRotations = new Dictionary<PlayableCard, float>();
 
     public override void _Ready()
     {
-        _cardRow = GetNodeOrNull<HBoxContainer>("CardRow");
-
-        // If requested, force the defaults at runtime so inspector overrides
-        // don't prevent us from testing wider spacing quickly.
-        if (force_defaults)
-        {
-            arc_width = default_force_arc_width;
-            min_card_gap = default_force_min_card_gap;
-            spread_multiplier = default_force_spread_multiplier;
-        }
-
-        // Ensure layout reflects any changes.
         RepositionCards();
     }
 
-    
+    public override void _Process(double delta)
+    {
+        // Reset every card each frame, then highlight the topmost hovered one.
+        _currentSelectedCardIndex = -1;
 
+        for (int i = 0; i < cards.Count; i++)
+        {
+            var card = cards[i];
+            if (card == null) continue;
+            card.Unhighlight();
+            card.ZIndex = i;
+        }
+
+        if (_hoveredCards.Count > 0)
+        {
+            int highest = -1;
+            foreach (var hovered in _hoveredCards)
+            {
+                int idx = cards.IndexOf(hovered);
+                if (idx > highest) highest = idx;
+            }
+            if (highest >= 0 && highest < cards.Count)
+            {
+                cards[highest].Highlight();
+                cards[highest].ZIndex = cards.Count;
+                _currentSelectedCardIndex = highest;
+            }
+        }
+    }
 
     public override void _Input(InputEvent @event)
     {
-        int selectedIndex = SelectedCardIndex;
-        if (@event.IsActionPressed("mouse_click") && selectedIndex >= 0)
-            EmitSignal(SignalName.CardActivated, cards[selectedIndex]);
+        if (@event.IsActionPressed("mouse_click") && _currentSelectedCardIndex >= 0)
+        {
+            EmitSignal(SignalName.CardActivated, cards[_currentSelectedCardIndex]);
+            _currentSelectedCardIndex = -1;
+        }
     }
 
-    // --- Public API ---
+    // --- Public API (matches the original interface used by Main.cs) ---
 
     public void AddCard(PlayableCard card)
     {
         cards.Add(card);
-
-        // Create a slot to host the card so the HBoxContainer controls
-        // horizontal layout while we can animate the card's position
-        // to implement hover lift.
-        var slot = new Control();
-        // Give the slot a minimal size so the HBoxContainer can size it.
-        try { slot.CustomMinimumSize = card.MinSize; } catch { }
-
-        if (_cardRow != null)
-            _cardRow.AddChild(slot);
-        else
-            AddChild(slot);
-
-        slot.AddChild(card);
-        card.Position = Vector2.Zero;
+        AddChild(card);
         card.Visible = true;
 
-        // Set slot minimum size from the card's MinSize (computed by Card)
-        try
-        {
-            if (card.MinSize != Vector2.Zero)
-                slot.CustomMinimumSize = card.MinSize;
-            else if (card.Card != null && card.Card.MinSize != Vector2.Zero)
-                slot.CustomMinimumSize = card.Card.MinSize;
-        }
-        catch { }
-
-        _slots[card] = slot;
-
-        // Attach to PlayableCard's custom signals emitted by its inner Card
-        card.PlayableCardMouseEntered += _ => OnCardHovered(card);
-        card.PlayableCardMouseExited  += _ => OnCardUnhovered(card);
+        card.PlayableCardMouseEntered += _ => _HandleCardTouched(card);
+        card.PlayableCardMouseExited  += _ => _HandleCardUntouched(card);
 
         RepositionCards();
     }
@@ -145,22 +98,13 @@ public partial class Hand : Control
         var card = cards[index];
         cards.RemoveAt(index);
         _hoveredCards.Remove(card);
-        if (_slots.TryGetValue(card, out var slot))
-        {
-            // Remove the slot (which also removes the card)
-            if (slot.GetParent() is Node parent)
-                parent.RemoveChild(slot);
-            slot.QueueFree();
-            _slots.Remove(card);
-            // Remove any baseline cache for this card
-            try { _baselinePositions.Remove(card); } catch { }
-            try { _baselineRotations.Remove(card); } catch { }
-        }
+        _baselinePositions.Remove(card);
+        _baselineRotations.Remove(card);
 
-        CreateTween()
-            .TweenCallback(Callable.From(RepositionCards))
-            .SetDelay(0.2f);
+        if (card.GetParent() == this)
+            RemoveChild(card);
 
+        CreateTween().TweenCallback(Callable.From(RepositionCards)).SetDelay(0.2f);
         return card;
     }
 
@@ -169,401 +113,85 @@ public partial class Hand : Control
 
     public IReadOnlyList<PlayableCard> Empty()
     {
-        var removed = cards.Where(c => c is not null).ToList();
-        foreach (var card in removed)
+        _currentSelectedCardIndex = -1;
+        var temp = cards.ToList();
+        foreach (var card in temp)
         {
-            if (_slots.TryGetValue(card, out var slot))
-            {
-                if (slot.GetParent() is Node parent)
-                    parent.RemoveChild(slot);
-                slot.QueueFree();
-            }
+            if (card.GetParent() == this)
+                RemoveChild(card);
         }
-        _slots.Clear();
         cards.Clear();
         _hoveredCards.Clear();
-        // Clear baseline caches
         _baselinePositions.Clear();
         _baselineRotations.Clear();
-        return removed;
+        return temp;
     }
 
-    // --- Layout ---
+    // --- Private helpers ---
+
+    private void _HandleCardTouched(PlayableCard card)
+    {
+        _hoveredCards.Add(card);
+
+        // Lift the card above its baseline
+        if (_baselinePositions.TryGetValue(card, out var baseline) &&
+            _baselineRotations.TryGetValue(card, out var rot))
+        {
+            _AnimateCard(card, baseline - new Vector2(0, hover_lift), rot);
+        }
+    }
+
+    private void _HandleCardUntouched(PlayableCard card)
+    {
+        _hoveredCards.Remove(card);
+
+        // Return to baseline
+        if (_baselinePositions.TryGetValue(card, out var baseline) &&
+            _baselineRotations.TryGetValue(card, out var rot))
+        {
+            _AnimateCard(card, baseline, rot);
+        }
+    }
 
     /// <summary>
-    /// Positions cards in a Slay the Spire style fan:
-    ///   - Cards spread along a wide, shallow elliptical arc.
-    ///   - The card at t=0 (centre) sits highest; outer cards dip down and rotate outward.
-    ///   - Hovered cards lift upward.
+    /// Distributes all cards evenly along the bottom arc of the circle,
+    /// exactly matching the GDScript reference's _reposition_cards logic.
     /// </summary>
     private void RepositionCards()
     {
-        int count = cards.Count;
-        if (count == 0)
-        {
-            // rely on child MinSize for spacing; nothing to position.
-            return;
-        }
+        if (cards.Count == 0) return;
 
-        float spacing = ComputeDesiredSpacing(count);
-        if (_cardRow != null)
-        {
-            // If inspector override is set, use it; otherwise compute separation.
-            if (separation_override >= 0)
-            {
-                // separation_override is ignored; rely on child MinSize for spacing.
-            }
-            else
-            {
-                // Compute average full width of cards (use Card.RectMinSize if available)
-                float totalWidth = 0f;
-                int measured = 0;
-                foreach (var c in cards)
-                {
-                    try
-                    {
-                            if (c.Card != null && c.Card.MinSize != Vector2.Zero)
-                            {
-                                totalWidth += c.Card.MinSize.X;
-                                measured++;
-                            }
-                    }
-                    catch { }
-                }
-                float avgFullWidth = measured > 0 ? totalWidth / measured : 0f;
-                // Convert center-to-center spacing into HBox separation (gap between child edges)
-                int separation = 0;
-                if (avgFullWidth > 0f)
-                    separation = Mathf.Clamp((int)(spacing - avgFullWidth), 0, 1000);
-                else
-                    separation = Mathf.Clamp((int)spacing, 0, 1000);
+        float cardSpread = Mathf.Min(angle_limit / cards.Count, max_card_spread_angle);
+        float currentAngle = -(cardSpread * (cards.Count - 1)) / 2.0f - 90.0f;
 
-                // HBoxContainer.Separation not available in this API; ignore.
-
-                // Ensure slot sizes reflect visual card sizes
-                foreach (var kv in _slots)
-                {
-                    var card = kv.Key;
-                    var slot = kv.Value;
-                    try
-                    {
-                                if (card.Card != null && card.Card.MinSize != Vector2.Zero)
-                                    slot.CustomMinimumSize = card.Card.MinSize;
-                    }
-                    catch { }
-                }
-            }
-        }
-
-        // Compute per-card baseline positions and rotations along the arc
-        float effectiveArcWidth = ComputeEffectiveArcWidth(count);
         _baselinePositions.Clear();
         _baselineRotations.Clear();
 
-        // Debug summary for the whole hand placement
-        if (debug_log_spacing)
+        foreach (var card in cards)
         {
-            try
-            {
-                GD.Print($"[HAND DEBUG] RepositionCards: count={count} spacing={spacing} effectiveArcWidth={effectiveArcWidth} arc_height={arc_height} hand_global_pos={GlobalPosition}");
-            }
-            catch { }
-        }
-
-        // mid is used to normalize index to t in [-1, 1]
-        float mid = (count - 1) / 2.0f;
-        for (int i = 0; i < count; i++)
-        {
-            var card = cards[i];
             if (card == null) continue;
+            Vector2 pos = _GetCardPosition(currentAngle);
+            float rot = Mathf.DegToRad(currentAngle + 90.0f);
 
-            float t = mid == 0 ? 0.0f : (i - mid) / mid; // -1 .. 1
-
-            Vector2 baseline = ArcPosition(t, effectiveArcWidth);
-            float rot = ArcRotation(t);
-
-            // Store baseline for hover logic and future updates
-            _baselinePositions[card] = baseline;
+            _baselinePositions[card] = pos;
             _baselineRotations[card] = rot;
 
-            // Animate the card to its baseline. Use x=0 because HBox/slot
-            // handles horizontal placement; Position.Y controls vertical offset.
-            AnimateCard(card, new Vector2(0, baseline.Y), rot);
-
-            if (debug_log_spacing)
-            {
-                // Gather some diagnostic state about the card and its slot
-                Vector2 slotGlobal = Vector2.Zero;
-                Vector2 slotMin = Vector2.Zero;
-                Vector2 cardGlobal = Vector2.Zero;
-                Vector2 cardMin = Vector2.Zero;
-                bool cardVisible = false;
-                bool hasTexture = false;
-                string textureInfo = "(none)";
-
-                try
-                {
-                    if (_slots.TryGetValue(card, out var slot))
-                    {
-                        slotGlobal = slot.GlobalPosition;
-                        slotMin = slot.CustomMinimumSize;
-                    }
-                }
-                catch { }
-
-                try
-                {
-                    cardGlobal = card.GlobalPosition;
-                    cardMin = card.MinSize;
-                    cardVisible = card.Visible;
-
-                    if (card.Card != null)
-                    {
-                        var sprite = card.Card.GetNodeOrNull<TextureRect>("CardSprite");
-                            if (sprite != null && sprite.Texture != null)
-                        {
-                            hasTexture = true;
-                            textureInfo = sprite.Texture.ResourcePath ?? sprite.Texture.GetType().Name;
-                        }
-                        else if (card.Card.image != null)
-                        {
-                            hasTexture = true;
-                            textureInfo = card.Card.image.ResourcePath ?? card.Card.image.GetType().Name;
-                        }
-                    }
-                }
-                catch { }
-
-                GD.Print($"[HAND DEBUG] idx={i} t={t:F2} baseline={baseline} rot={rot:F3} slot_global={slotGlobal} slot_min={slotMin} card_global={cardGlobal} card_min={cardMin} visible={cardVisible} hasTexture={hasTexture} tex={textureInfo}");
-            }
+            _AnimateCard(card, pos, rot);
+            currentAngle += cardSpread;
         }
     }
 
-    /// <summary>
-    /// Compute a sensible spacing (centre-to-centre) between adjacent cards.
-    /// Attempts to read card sprite sizes similarly to ComputeEffectiveArcWidth,
-    /// but returns a spacing value rather than an arc width.
-    /// </summary>
-    private float ComputeDesiredSpacing(int count)
+    private void _AnimateCard(PlayableCard card, Vector2 targetPos, float targetRot)
     {
-        if (count <= 1) return 0.0f;
-
-        // For each card compute its visual half-width in pixels (texture width * total scale / 2).
-        var halfWidths = new List<float>(count);
-        foreach (var c in cards)
-        {
-            float half = min_card_gap / 2.0f; // default half-width fallback
-            if (c?.Card != null)
-            {
-                // Cache the Card node to a local variable to avoid repeated
-                // null-conditional access which can confuse the nullable analyzer.
-                var cardNode = c.Card;
-                // Prefer using RectMinSize if already computed on the card control
-                try
-                {
-                    if (c.MinSize != Vector2.Zero)
-                    {
-                        half = c.MinSize.X / 2.0f;
-                    }
-                    else
-                    {
-                        var sprite = cardNode.GetNodeOrNull<TextureRect>("CardSprite");
-                        if (sprite != null && sprite.Texture != null)
-                        {
-                            var tex = sprite.Texture;
-                            Vector2 texSize = tex.GetSize();
-                            float scaleX = sprite.Scale.X != 0 ? sprite.Scale.X : (cardNode.Scale.X != 0 ? cardNode.Scale.X : 1.0f);
-                            scaleX *= c.Scale.X != 0 ? c.Scale.X : 1.0f;
-                            half = (texSize.X * scaleX) / 2.0f;
-                        }
-                        else if (cardNode.image != null)
-                        {
-                            var tex = cardNode.image;
-                            Vector2 texSize = tex.GetSize();
-                            float scaleX = cardNode.Scale.X != 0 ? cardNode.Scale.X : 1.0f;
-                            scaleX *= c.Scale.X != 0 ? c.Scale.X : 1.0f;
-                            half = (texSize.X * scaleX) / 2.0f;
-                        }
-                    }
-                }
-                catch { }
-            }
-
-            halfWidths.Add(half);
-        }
-
-        float maxAdjacentNeeded = 0f;
-        float maxFullWidth = 0f;
-        for (int i = 0; i < halfWidths.Count - 1; i++)
-        {
-            float neededAdj = halfWidths[i] + halfWidths[i + 1] + min_card_padding;
-            if (neededAdj > maxAdjacentNeeded) maxAdjacentNeeded = neededAdj;
-        }
-        foreach (var h in halfWidths)
-            if (h * 2.0f > maxFullWidth) maxFullWidth = h * 2.0f;
-
-        float baselineNeeded = Mathf.Max(maxAdjacentNeeded, min_card_gap);
-        if (force_no_overlap)
-            baselineNeeded = Mathf.Max(baselineNeeded, maxFullWidth + min_card_padding);
-
-        return baselineNeeded;
-    }
-
-    /// <summary>Maps t in [-1, 1] to a point on the elliptical arc.</summary>
-    private Vector2 ArcPosition(float t, float effectiveArcWidth)
-    {
-        // x spreads linearly; y uses a parabola so centre cards sit higher than edge cards.
-        float x = t * effectiveArcWidth;
-        float y = (t * t) * arc_height;
-        return new Vector2(x, y);
-    }
-
-    /// <summary>Cards rotate to fan out from the bottom centre, matching the arc tangent.</summary>
-    private float ArcRotation(float t)
-        => Mathf.DegToRad(t * max_rotation_deg);
-
-    /// <summary>
-    /// Compute an effective arc width for `count` cards. Attempts to read the
-    /// visual card width from the first available card texture; falls back to
-    /// `min_card_gap` if not available. Ensures adjacent card centres are at
-    /// least the desired gap so overlap is minimal.
-    /// </summary>
-    private float ComputeEffectiveArcWidth(int count)
-    {
-        float effective = arc_width;
-        if (count <= 1) return effective;
-
-        // For each card compute its visual half-width in pixels (texture width * total scale / 2).
-        var halfWidths = new List<float>(count);
-        foreach (var c in cards)
-        {
-            float half = min_card_gap / 2.0f; // default half-width fallback
-            if (c?.Card != null)
-            {
-                // Prefer RectMinSize computed on the Card control
-                try
-                {
-                    if (c.Card.MinSize != Vector2.Zero)
-                    {
-                        half = c.Card.MinSize.X / 2.0f;
-                    }
-                    else
-                    {
-                        var sprite = c.Card.GetNodeOrNull<TextureRect>("CardSprite");
-                        if (sprite != null && sprite.Texture != null)
-                        {
-                            var tex = sprite.Texture;
-                            Vector2 texSize = tex.GetSize();
-                            float scaleX = sprite.Scale.X != 0 ? sprite.Scale.X : (c.Card.Scale.X != 0 ? c.Card.Scale.X : 1.0f);
-                            // Also include PlayableCard's own scale if present
-                            scaleX *= c.Scale.X != 0 ? c.Scale.X : 1.0f;
-                            half = (texSize.X * scaleX) / 2.0f;
-                        }
-                        else if (c.Card.image != null)
-                        {
-                            var tex = c.Card.image;
-                            Vector2 texSize = tex.GetSize();
-                            float scaleX = c.Card.Scale.X != 0 ? c.Card.Scale.X : 1.0f;
-                            scaleX *= c.Scale.X != 0 ? c.Scale.X : 1.0f;
-                            half = (texSize.X * scaleX) / 2.0f;
-                        }
-                    }
-                }
-                catch { }
-            }
-
-            halfWidths.Add(half);
-        }
-
-        // Compute the maximum adjacent required centre distance so a constant
-        // step between all cards satisfies the worst case and guarantees minimal overlap.
-        float maxAdjacentNeeded = 0f;
-        float maxFullWidth = 0f;
-        for (int i = 0; i < halfWidths.Count - 1; i++)
-        {
-            float neededAdj = halfWidths[i] + halfWidths[i + 1] + min_card_padding;
-            if (neededAdj > maxAdjacentNeeded) maxAdjacentNeeded = neededAdj;
-        }
-        // Also compute the maximum full card width seen (stronger no-overlap check)
-        foreach (var h in halfWidths)
-            if (h * 2.0f > maxFullWidth) maxFullWidth = h * 2.0f;
-
-        // Baseline step coming from the configured arc width (span distributed evenly).
-        float baselineStep = (2.0f * arc_width) / (count - 1);
-
-        float baselineNeeded = Mathf.Max(maxAdjacentNeeded, baselineStep);
-        if (force_no_overlap)
-            baselineNeeded = Mathf.Max(baselineNeeded, maxFullWidth + min_card_padding);
-
-        float step = baselineNeeded * spread_multiplier;
-        // effectiveArcWidth is half of the total span: step * (count - 1) / 2
-        float halfSpan = step * (count - 1) / 2.0f;
-        return halfSpan;
-    }
-
-    private void AnimateCard(PlayableCard card, Vector2 targetPos, float targetRot)
-    {
-        // Animate the PlayableCard control's rect_position (local to its parent slot/HBox)
         var tween = CreateTween().SetParallel();
-        tween.TweenProperty(card, "position", targetPos, 0.15f)
-             .SetTrans(Tween.TransitionType.Quad)
-             .SetEase(Tween.EaseType.Out);
-        tween.TweenProperty(card, "rotation", targetRot, 0.15f)
-             .SetTrans(Tween.TransitionType.Quad)
-             .SetEase(Tween.EaseType.Out);
+        tween.TweenProperty(card, "position", targetPos, 0.2f);
+        tween.TweenProperty(card, "rotation", targetRot, 0.6f);
     }
 
-    // --- Hover handlers ---
-
-    private void OnCardHovered(PlayableCard card)
+    private Vector2 _GetCardPosition(float angleInDegrees)
     {
-        _hoveredCards.Add(card);
-        int i = cards.IndexOf(card);
-        if (i < 0) return;
-
-        // Lift relative to the computed baseline if available.
-        Vector2 baseline = Vector2.Zero;
-        float baselineRot = 0.0f;
-        try { if (_baselinePositions.TryGetValue(card, out var b)) baseline = b; } catch { }
-        try { if (_baselineRotations.TryGetValue(card, out var r)) baselineRot = r; } catch { }
-
-        AnimateCard(card, new Vector2(0, baseline.Y - hover_lift), baselineRot);
-    }
-
-    private void OnCardUnhovered(PlayableCard card)
-    {
-        _hoveredCards.Remove(card);
-        int i = cards.IndexOf(card);
-        if (i < 0) return;
-
-        // Return to baseline if we have it, otherwise zero
-        Vector2 baseline = Vector2.Zero;
-        float baselineRot = 0.0f;
-        try { if (_baselinePositions.TryGetValue(card, out var b)) baseline = b; } catch { }
-        try { if (_baselineRotations.TryGetValue(card, out var r)) baselineRot = r; } catch { }
-
-        AnimateCard(card, new Vector2(0, baseline.Y), baselineRot);
-    }
-
-    public override void _Process(double delta)
-    {
-        base._Process(delta);
-
-
-        int selectedIndex = SelectedCardIndex;
-
-        for (int i = 0; i < cards.Count; i++)
-        {
-            var card = cards[i];
-            if (card is null) continue;
-
-            bool isSelected = i == selectedIndex;
-            card.ZIndex = isSelected ? cards.Count : i;
-
-            if (isSelected)
-                card.Highlight();
-            else
-                card.Unhighlight();
-        }
+        float x = hand_radius * Mathf.Cos(Mathf.DegToRad(angleInDegrees));
+        float y = hand_radius * Mathf.Sin(Mathf.DegToRad(angleInDegrees));
+        return new Vector2(x, y);
     }
 }

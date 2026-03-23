@@ -159,11 +159,11 @@ character_data = ExtResource("16_me22f")
 
 [node name="Hand" parent="CanvasLayer" instance=ExtResource("10_4fja5")]
 unique_name_in_owner = true
-position = Vector2(576, 700)
-arc_width = 420.0
-arc_height = 80.0
+position = Vector2(576, 1629)
+hand_radius = 1000.0
+angle_limit = 30.0
+max_card_spread_angle = 10.0
 hover_lift = 80.0
-max_rotation_deg = 12.0
 
 [node name="EndTurnButton" type="Button" parent="."]
 unique_name_in_owner = true

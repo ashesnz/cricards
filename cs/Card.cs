@@ -44,13 +44,15 @@ public partial class Card : Control
 		type_label = GetNodeOrNull<Label>("TypeLabel");
 		card_sprite = GetNodeOrNull<TextureRect>("CardSprite");
 
-		// Set rect_min_size based on the card sprite texture and scale so parent layouts
-		// can size slots sensibly.
 		UpdateRectMinSizeFromSprite();
 
-		// Wire Control's parameterless MouseEntered/MouseExited to our custom signals
-		this.MouseEntered += () => { EmitSignal("CardMouseEntered", this); };
-		this.MouseExited += () => { EmitSignal("CardMouseExited", this); };
+		// Centre the Card control on its parent's origin so that the fan rotation
+		// spins cards around their visual centre (matching the Sprite2D-centred original).
+		if (_minSize != Vector2.Zero)
+			Position = -_minSize / 2.0f;
+
+		this.MouseEntered += () => EmitSignal("CardMouseEntered", this);
+		this.MouseExited  += () => EmitSignal("CardMouseExited",  this);
 	}
 
 	public override void _Process(double delta)
@@ -79,10 +81,10 @@ public partial class Card : Control
 		if (!is_highlighted)
 		{
 			is_highlighted = true;
-						var tween = CreateTween();
-						tween.SetParallel();
-			tween.TweenProperty(this, "rect_scale", _original_scale * 1.25f, 0.2f);
-			tween.TweenProperty(this, "rect_position:y", _original_position.Y - 135, 0.2f);
+			var tween = CreateTween();
+			tween.SetParallel();
+			tween.TweenProperty(this, "scale",      _original_scale * 1.25f,          0.2f);
+			tween.TweenProperty(this, "position:y", _original_position.Y - 135.0f,    0.2f);
 		}
 	}
 
@@ -93,8 +95,8 @@ public partial class Card : Control
 			is_highlighted = false;
 			tween_unhighlight = CreateTween();
 			tween_unhighlight.SetParallel();
-			tween_unhighlight.TweenProperty(this, "rect_scale", _original_scale * 1.0f, 0.5f);
-			tween_unhighlight.TweenProperty(this, "rect_position:y", _original_position.Y, 0.5f);
+			tween_unhighlight.TweenProperty(this, "scale",      _original_scale * 1.0f,       0.5f);
+			tween_unhighlight.TweenProperty(this, "position:y", _original_position.Y,          0.5f);
 		}
 	}
 
@@ -196,12 +198,13 @@ public partial class Card : Control
 		if (card_sprite != null && card_sprite.Texture != null)
 		{
 			Vector2 texSize = card_sprite.Texture.GetSize();
-			Vector2 scale = card_sprite.Scale != Vector2.Zero ? card_sprite.Scale : this.Scale;
-			_minSize = texSize * scale;
-			_original_scale = this.Scale;
-			_original_position = this.Position;
+			// Always use the Card node's own scale (0.375) – card_sprite has no scale of its own.
+			Vector2 cardScale = (Scale != Vector2.Zero) ? Scale : Vector2.One;
+			_minSize = texSize * cardScale;
+			CustomMinimumSize = _minSize;
+			_original_scale    = Scale;
+			_original_position = Position;
 		}
 	}
 }
-
 
